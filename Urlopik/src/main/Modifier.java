@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Modifier {
 
-	public static void changeOff (int mode, int remaining, int planned,  Map<LocalDate, Integer> yearMap) {
+	public static Map<LocalDate, Integer> changeOff (int mode, int remaining, int planned,  Map<LocalDate, Integer> yearMap) {
 		
 		Scanner sc = new Scanner(System.in);
 		
@@ -47,19 +47,28 @@ public class Modifier {
 		
 		} while (valid==false);
 		
+		System.out.println(end.compareTo(start));
 		
-		for (int i=0;i<(end.compareTo(start));i++) {										//iterating from the beginning to the end of off/anulation period
-			int curDayStatus = (int)yearMap.values().toArray()[start.getDayOfYear()+i];		//casting "value" object to integer
+		for (int i=0;i<=(end.compareTo(start));i++) {										//iterating from the beginning to the end of off/anulation period
+//			int curDayStatus = (int)yearMap.values().toArray()[start.getDayOfYear()+i];		//casting "value" object to integer
 			
+			LocalDate curDay = start.plusDays(i);
+			
+			int curDayStatus = yearMap.get(LocalDate.ofYearDay(curDay.getYear(), curDay.getDayOfYear()));
+			
+						
 			if(curDayStatus == 0) {															//checking if current day from the period is working 
-				yearMap.values().toArray()[start.getDayOfYear()+i]=1;						//setting it to off day
-				remaining--;																//deducting remaining off days
+				yearMap.put(curDay, 1);														//setting it to off day
 			}
 		}
 		
 		}
 		
+		System.out.println(yearMap.values().toArray()[1]);
+		
 		sc.close();
+		
+		return yearMap;
 	}
 	
 	private static Boolean dateValidator (LocalDate st, LocalDate en) {

@@ -10,7 +10,7 @@ public class Main {
 		int curYear = LocalDate.now().getYear();
 		int nextYear = LocalDate.now().getYear()+1;
 		
-		String offBinary = Reader.dataFromFile("off.txt");
+		String offBinary = Reader.dataFromFile("off_clear.txt");
 		int totalOffCount = 90;
 		
 		Map<LocalDate, Integer> curYearMap = Mapper.generateMap(offBinary, curYear);
@@ -27,7 +27,7 @@ public class Main {
 		
 		curCount.summary();
 		
-		curYearMap = Modifier2.changeOff(1, remainingOffCount, plannedOffCount, curYearMap);
+		curYearMap = Modifier.changeOff(1, remainingOffCount, plannedOffCount, curYearMap);
 		
 		
 		curCount = new Counter(curYearMap, totalOffCount);
