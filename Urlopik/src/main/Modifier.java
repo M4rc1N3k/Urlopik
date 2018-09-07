@@ -1,6 +1,8 @@
 package main;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -10,7 +12,7 @@ public class Modifier {
 		
 		Scanner sc = new Scanner(System.in);
 		
-		LocalDate start, end;
+		LocalDate start=null, end=null;
 		
 		if ((mode==1) && (remaining==0)){
 			System.out.println("Nie masz urlopu do wykorzystania!");
@@ -35,22 +37,36 @@ public class Modifier {
 
 		}
 		
-		Boolean valid = false;
+		Boolean validD=false, validA = false, trigger;
 		
+		
+		/* asking for dates */
 		do {
-		System.out.print("Podaj początek w formacie RRRR-MM-DD: ");
-		start = LocalDate.parse(sc.nextLine());
-		System.out.print("Podaj koniec w formacie RRRR-MM-DD: ");
-		end = LocalDate.parse(sc.nextLine());
+			trigger = false;																//exception error trigger
+			try {																			//checking the validity of input date format
+				System.out.print("Podaj początek w formacie RRRR-MM-DD: ");
+				start = LocalDate.parse(sc.nextLine());
+				System.out.print("Podaj koniec w formacie RRRR-MM-DD: ");
+				end = LocalDate.parse(sc.nextLine());
+			
+			
+				validD = dateValidator(start, end);											//checking the validity of dates (not from the past, in proper order and so on)
+				
+				if (mode==1) {
+					validA = allowanceValidator(end.until(start, ChronoUnit.DAYS), remaining);			//checking if remaining allowance is larger than planned off days
+				}
+				else validA=true;
+			
+			} catch (DateTimeParseException e) {
+				System.out.println("Błędny format daty!");
+				trigger = true;
+			}
 		
-		valid = dateValidator(start, end);
+		} while (validD==false || validA==false || trigger==true);
 		
-		} while (valid==false);
 		
-		System.out.println(end.compareTo(start));
-		
-		for (int i=0;i<=(end.compareTo(start));i++) {										//iterating from the beginning to the end of off/anulation period
-//			int curDayStatus = (int)yearMap.values().toArray()[start.getDayOfYear()+i];		//casting "value" object to integer
+		for (int i=0;i<=(end.until(start, ChronoUnit.DAYS));i++) {										//iterating from the beginning to the end of off/anulation period
+
 			
 			LocalDate curDay = start.plusDays(i);
 			
@@ -71,16 +87,32 @@ public class Modifier {
 		return yearMap;
 	}
 	
+	
+	
 	private static Boolean dateValidator (LocalDate st, LocalDate en) {
 		
-		if (en.compareTo(st)<0)
-			return false;
+		if (en.until(st, ChronoUnit.DAYS)<0)
+			{System.out.println("Data końca zakresu nie może poprzedzać daty początku zakresu.\n");
+			return false;}
 //		else if (st.compareTo(LocalDate.now())<0)
-//			return false;
+//			{System.out.println("Nie można modyfikować urlopu post factum.\n");
+//			return false;}
+//		else if (en.getYear()>(LocalDate.now().getYear()+1))											//unlock this condition after implementing use of the following year
+//			{System.out.println("Można modyfikować urlop nie dalej niż w roku następnym.\n");
 		else if (en.getYear()>LocalDate.now().getYear())
-			return false;
+			{System.out.println("Można modyfikować urlop nie dalej niż w roku bieżącym.\n");
+			return false;}
 		else 
 			return true;
 		
 	}
+	
+	private static Boolean allowanceValidator (long tempPlanned, int remaining) {
+		if (tempPlanned > remaining) {
+			System.out.println("Nie masz tylu dni do wykorzystania. \nPlanowałeś rozpisać ich "+tempPlanned+" a pozostało zaledwie "+remaining+".\n");
+			return false;
+		}
+		else return true;
+	}
+	
 }
