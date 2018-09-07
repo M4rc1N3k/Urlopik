@@ -23,8 +23,8 @@ public class Counter {
 		int planned=0;
 		LocalDate day = today;
 		
-		int iterator = 0;
-		while (iterator<=(yearMap.size()-todayNumber)) {
+		int iterator = todayNumber;
+		while (iterator<=yearMap.size()) {
 			
 			if (yearMap.get(day)==1) {
 				planned++;
@@ -42,7 +42,7 @@ public class Counter {
 		int used=0;
 		LocalDate day = LocalDate.parse(String.valueOf(today.getYear()+"-01-01"));
 		
-		int iterator = 0;
+		int iterator = 1;
 		while (iterator<=todayNumber) {
 			if (yearMap.get(day)==1) {
 				used++;
@@ -62,9 +62,9 @@ public class Counter {
 
 	public void summary () {
 		System.out.println("Ogółem urlopu "+getTotal()+" dni, w tym:");
-		System.out.println("\tZaplanowano "+getPlanned()+" dni");
-		System.out.println("\tWykorzystano "+getUsed()+" dni");
-		System.out.println("\tPozostało "+getRemaining()+" dni");
+		System.out.println("\t-zaplanowano "+getPlanned()+" dni");
+		System.out.println("\t-wykorzystano "+getUsed()+" dni");
+		System.out.println("\t-pozostało "+getRemaining()+" dni");
 	}
 
 	public int getTotal() {
