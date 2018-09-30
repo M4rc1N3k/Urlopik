@@ -38,7 +38,7 @@ public class Modifier {
 
 		}
 		
-		Boolean validD=false, validA = false, trigger;
+		Boolean validD=false, validA = false, trigger, change=false;
 		
 		
 		/* asking for dates */
@@ -75,16 +75,21 @@ public class Modifier {
 			
 			if(curDayStatus == 0 && mode == 1) {															//checking if current day from the period is working 
 				yearMap.put(curDay, 1);																		//setting it to off day
+				change = true;
 			}
 			else if(curDayStatus == 1 && mode == 2) {														//checking if current day from the period is off 
 				yearMap.put(curDay, 0);																		//setting it to working day
+				change = true;
 			}
 		}
 		
+		if (change == true)
+			System.out.println("Zmiana wprowadzona.");
+		else
+			System.out.println("Brak wprowadzonych zmian.");
 		}
 		
 //		sc.close();
-		System.out.println("Zmiana wprowadzona!");
 		return yearMap;
 	}
 	
@@ -95,7 +100,7 @@ public class Modifier {
 		if (st.until(en, ChronoUnit.DAYS)<0)
 			{System.out.println("Data końca zakresu nie może poprzedzać daty początku zakresu.\n");
 			return false;}
-//		else if (st.compareTo(LocalDate.now())<0)
+//		else if (st.compareTo(LocalDate.now())<0)														//unlock this condition after finish of testing
 //			{System.out.println("Nie można modyfikować urlopu post factum.\n");
 //			return false;}
 //		else if (en.getYear()>(LocalDate.now().getYear()+1))											//unlock this condition after implementing use of the following year
