@@ -14,6 +14,7 @@ public class Modifier {
 		
 		LocalDate start=null, end=null;
 		
+
 		if ((mode==1) && (remaining==0)){
 			System.out.println("Nie masz urlopu do wykorzystania!");
 		}
@@ -53,7 +54,7 @@ public class Modifier {
 				validD = dateValidator(start, end);											//checking the validity of dates (not from the past, in proper order and so on)
 				
 				if (mode==1) {
-					validA = allowanceValidator(end.until(start, ChronoUnit.DAYS), remaining);			//checking if remaining allowance is larger than planned off days
+					validA = allowanceValidator(start.until(end, ChronoUnit.DAYS), remaining);			//checking if remaining allowance is larger than planned off days
 				}
 				else validA=true;
 			
@@ -65,25 +66,25 @@ public class Modifier {
 		} while (validD==false || validA==false || trigger==true);
 		
 		
-		for (int i=0;i<=(end.until(start, ChronoUnit.DAYS));i++) {										//iterating from the beginning to the end of off/anulation period
+		for (int i=0;i<=(start.until(end, ChronoUnit.DAYS));i++) {										//iterating from the beginning to the end of off/anulation period
 
 			
 			LocalDate curDay = start.plusDays(i);
 			
 			int curDayStatus = yearMap.get(LocalDate.ofYearDay(curDay.getYear(), curDay.getDayOfYear()));
 			
-						
-			if(curDayStatus == 0) {															//checking if current day from the period is working 
-				yearMap.put(curDay, 1);														//setting it to off day
+			if(curDayStatus == 0 && mode == 1) {															//checking if current day from the period is working 
+				yearMap.put(curDay, 1);																		//setting it to off day
+			}
+			else if(curDayStatus == 1 && mode == 2) {														//checking if current day from the period is off 
+				yearMap.put(curDay, 0);																		//setting it to working day
 			}
 		}
 		
 		}
 		
-		System.out.println(yearMap.values().toArray()[1]);
-		
-		sc.close();
-		
+//		sc.close();
+		System.out.println("Zmiana wprowadzona!");
 		return yearMap;
 	}
 	
@@ -91,7 +92,7 @@ public class Modifier {
 	
 	private static Boolean dateValidator (LocalDate st, LocalDate en) {
 		
-		if (en.until(st, ChronoUnit.DAYS)<0)
+		if (st.until(en, ChronoUnit.DAYS)<0)
 			{System.out.println("Data końca zakresu nie może poprzedzać daty początku zakresu.\n");
 			return false;}
 //		else if (st.compareTo(LocalDate.now())<0)
