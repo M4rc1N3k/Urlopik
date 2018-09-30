@@ -20,11 +20,9 @@ public class Printer {
 			LocalDate previousDay = entry.getKey().minusDays(1);
 			LocalDate nextDay = entry.getKey().plusDays(1);
 			
-//			if ((iterator==0) || (yearMap.get(currentDay)==1) && (yearMap.get(previousDay)==0))
-			if ((yearMap.get(currentDay)==1) && ((iterator==0) || (yearMap.get(previousDay)==0)))
+			if ((yearMap.get(currentDay)==1) && ((iterator==0) || (yearMap.get(previousDay)!=1)))
 				a = currentDay.toString();
-//			if ((iterator==yearMap.size()-1) || (yearMap.get(currentDay)==1) && (yearMap.get(nextDay)==0))
-			if ((yearMap.get(currentDay)==1) && ((iterator==yearMap.size()-1) || (yearMap.get(nextDay)==0)))
+			if ((yearMap.get(currentDay)==1) && ((iterator==yearMap.size()-1) || (yearMap.get(nextDay)!=1)))
 				b = currentDay.toString();
 			
 			iterator++;
@@ -35,6 +33,8 @@ public class Printer {
 				a="";
 				b="";
 			}
+			
+
 			
 			}
 	
