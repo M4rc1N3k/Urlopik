@@ -25,11 +25,13 @@ public class Mapper {
 		
 		int leapYearAppx = isLeapYear(year) ? 1 : 0;
 		int yearLength = 365 + leapYearAppx; 
-		
+	
+	List<LocalDate> holidaysList = Holidays.holidaysList(String.valueOf(year));
+	
 	LocalDate date = LocalDate.parse(String.valueOf(year+"-01-01"));	
 	Map<LocalDate, Integer>yearMap = new TreeMap<>();
 		for (int i=0;i<yearLength;i++) {
-			if (isHoliday(date))
+			if (isHoliday(date, holidaysList))
 				yearMap.put(date, 2); //digit "2" marks holiday
 			else
 				yearMap.put(date, listInt.get(i));
@@ -50,10 +52,15 @@ public class Mapper {
 			return Boolean.FALSE;
 	}
 	
-	private static Boolean isHoliday (LocalDate date) {
+	private static Boolean isHoliday (LocalDate date, List<LocalDate> holidaysList) {
+		
+		for (LocalDate holiday : holidaysList) {
+			if (holiday.compareTo(date) == 0)
+				return Boolean.TRUE;
+		}
+		
 		if (date.getDayOfWeek().toString()=="SATURDAY" || date.getDayOfWeek().toString()=="SUNDAY")
 			return Boolean.TRUE;
-		//TODO: national and religious holidays
 		else
 			return Boolean.FALSE;
 	}
