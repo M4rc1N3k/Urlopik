@@ -27,7 +27,7 @@ public class Printer {
 				{a = currentDay.toString();
 				tempDay = currentDay.minusDays(1);
 					
-				while ((currentDay.getDayOfYear() > 1) && (yearMap.get(tempDay) == 2)) {										//checks how many free days precedes off period
+				while (((tempDay.getDayOfYear() >= 1) && (tempDay.getYear() == currentDay.getYear())) && (yearMap.get(tempDay) == 2)) {										//checks how many free days precedes off period
 					c++;
 					tempDay = tempDay.minusDays(1);
 				}
@@ -38,7 +38,7 @@ public class Printer {
 				{b = currentDay.toString();
 				tempDay = currentDay.plusDays(1);
 				
-				while ((currentDay.getDayOfYear() < (365+(tempDay.isLeapYear() ? 1 : 0))) && (yearMap.get(tempDay) == 2)) {		//checks how many free days follows off period
+				while (((tempDay.getDayOfYear() <= (365+(tempDay.isLeapYear() ? 1 : 0))) && (tempDay.getYear() == currentDay.getYear())) && (yearMap.get(tempDay) == 2)) {		//checks how many free days follows off period !YEAR SENSITIVE!
 						d++;
 						tempDay = tempDay.plusDays(1);
 					}
@@ -64,7 +64,7 @@ public class Printer {
 				
 				if (d!=0)															//when off period is followed by free days
 					{
-					if (yearMap.get(LocalDate.parse(b).plusDays(d+1))==1)					//when after off period followed by free days another off period starts
+					if ((LocalDate.parse(b).plusDays(d+1).getYear() == currentDay.getYear()) && (yearMap.get(LocalDate.parse(b).plusDays(d+1)) == 1))					///when after off period followed by free days another off period starts !YEAR SENSITIVE!
 						trig = true;															//switches trigger on and omit saving the free days number (they will be added before next off period starts)
 					else
 						{String y_part = "("+d+" dni wolne)";								
