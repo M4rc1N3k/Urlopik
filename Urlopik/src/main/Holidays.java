@@ -6,14 +6,7 @@ import java.util.List;
 
 public class Holidays {
 	
-	public static void main(String[] args) {
-		String year = "2020";
-		
-		System.out.println(holidaysList(year));
-		
-		System.out.println("koniec");
-	}
-	
+
 	
 	public static List<LocalDate> holidaysList (String year){
 		
