@@ -24,14 +24,23 @@ public class Enums {
     }
 
     public enum OperationMode {
-        SET(1),
-        CANCEL(2),
-        EXIT(3);
+        SET,
+        CANCEL,
+        EXIT,
+        DEFAULT;
 
-        private int value;
 
-        OperationMode (int value){
-            this.value = value;
+
+        public static OperationMode fromInt (int x){
+            switch (x){
+                case 1:
+                    return SET;
+                case 2:
+                    return CANCEL;
+                case 3:
+                    return EXIT;
+            }
+            return DEFAULT;
         }
 
     }
