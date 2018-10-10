@@ -3,6 +3,7 @@ package main;
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.Scanner;
+import static main.Enums.OperationMode;
 
 
 public class Main {
@@ -16,8 +17,7 @@ public class Main {
 		String offBinary = Reader.dataFromFile("off_forCancel.txt");
 		int totalOffCount = 90;
 		
-//		int mode = -1;
-		Enums.OperationMode mode;
+		OperationMode mode = OperationMode.DEFAULT;
 		Boolean trigger;
 		
 		Map<LocalDate, Integer> curYearMap = Mapper.generateMap(offBinary, curYear);
@@ -53,16 +53,14 @@ public class Main {
 				System.out.println("\t2) anulować urlop");
 				System.out.println("\t3) zakończyć program");
 
-//				mode = Integer.parseInt(sc.next());
-                System.out.println(Enums.OperationMode.SET);
-//				mode = Enums.OperationMode(Integer.parseInt(sc.next()));
-				
-				if (mode == 1 || mode == 2)
+				mode = OperationMode.fromInt(Integer.parseInt(sc.next()));
+
+				if (mode == OperationMode.SET || mode == OperationMode.CANCEL)
 					{curYearMap = Modifier.changeOff(mode, remainingOffCount, plannedOffCount, curYearMap);
 					//TODO: zapis mapy do pliku
 					}
-				else
-					{System.out.println("Do widzenia!");
+				else if (mode == OperationMode.EXIT)
+                {System.out.println("Do widzenia!");
 					break;}
 				
 				System.out.println();
@@ -76,7 +74,7 @@ public class Main {
 			
 		
 
-		} while (mode != 3 || trigger == true);
+		} while (mode != OperationMode.EXIT || trigger == true);
 		
 		sc.close();
 		
