@@ -5,25 +5,26 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Scanner;
+import static main.Enums.OperationMode;
 
 public class Modifier {
 
-	public static Map<LocalDate, Integer> changeOff (int mode, int remaining, int planned,  Map<LocalDate, Integer> yearMap) {
+	public static Map<LocalDate, Integer> changeOff (OperationMode mode, int remaining, int planned, Map<LocalDate, Integer> yearMap) {
 		
 		Scanner sc = new Scanner(System.in);
 		
 		LocalDate start=null, end=null;
 		
 
-		if ((mode==1) && (remaining==0)){
+		if ((mode == OperationMode.SET) && (remaining == 0)){
 			System.out.println("Nie masz urlopu do wykorzystania!");
 		}
-		else if ((mode==2) && (planned==0)){
+		else if ((mode == OperationMode.CANCEL) && (planned == 0)){
 			System.out.println("Nie masz rozpisanego urlopu do anulowania!");
 		}
 		else
 			
-		{	if ((mode==1) && (remaining>0)){
+		{	if ((mode == OperationMode.SET) && (remaining > 0)){
 			
 			System.out.println("TRYB: Rozpisanie urlopu");
 			
@@ -31,7 +32,7 @@ public class Modifier {
 		
 		
 		
-		else if ((mode==2) && (planned>0)){
+		else if ((mode == OperationMode.CANCEL) && (planned > 0)){
 			
 			System.out.println("TRYB: Anulowanie urlopu");
 			
@@ -53,7 +54,7 @@ public class Modifier {
 			
 				validD = dateValidator(start, end);											//checking the validity of dates (not from the past, in proper order and so on)
 				
-				if (mode==1) {
+				if (mode == OperationMode.SET) {
 					validA = allowanceValidator(start.until(end, ChronoUnit.DAYS), remaining);			//checking if remaining allowance is larger than planned off days
 				}
 				else validA=true;
@@ -73,11 +74,11 @@ public class Modifier {
 			
 			int curDayStatus = yearMap.get(LocalDate.ofYearDay(curDay.getYear(), curDay.getDayOfYear()));
 			
-			if(curDayStatus == 0 && mode == 1) {															//checking if current day from the period is working 
+			if(curDayStatus == 0 && mode == OperationMode.SET) {															//checking if current day from the period is working
 				yearMap.put(curDay, 1);																		//setting it to off day
 				change = true;
 			}
-			else if(curDayStatus == 1 && mode == 2) {														//checking if current day from the period is off 
+			else if(curDayStatus == 1 && mode == OperationMode.CANCEL) {														//checking if current day from the period is off
 				yearMap.put(curDay, 0);																		//setting it to working day
 				change = true;
 			}
