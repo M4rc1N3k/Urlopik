@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.Scanner;
 
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -15,7 +16,8 @@ public class Main {
 		String offBinary = Reader.dataFromFile("off_forCancel.txt");
 		int totalOffCount = 90;
 		
-		int mode = -1;
+//		int mode = -1;
+		Enums.OperationMode mode;
 		Boolean trigger;
 		
 		Map<LocalDate, Integer> curYearMap = Mapper.generateMap(offBinary, curYear);
@@ -51,7 +53,9 @@ public class Main {
 				System.out.println("\t2) anulować urlop");
 				System.out.println("\t3) zakończyć program");
 
-				mode = Integer.parseInt(sc.next());
+//				mode = Integer.parseInt(sc.next());
+                System.out.println(Enums.OperationMode.SET);
+//				mode = Enums.OperationMode(Integer.parseInt(sc.next()));
 				
 				if (mode == 1 || mode == 2)
 					{curYearMap = Modifier.changeOff(mode, remainingOffCount, plannedOffCount, curYearMap);
