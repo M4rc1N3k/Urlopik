@@ -5,42 +5,44 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Scanner;
+import static main.Enums.OperationMode;
+import static main.Enums.OffMode;
 
 public class Modifier {
 
-	public static Map<LocalDate, Integer> changeOff (int mode, int remaining, int planned,  Map<LocalDate, Integer> yearMap) {
-		
-		Scanner sc = new Scanner(System.in);
-		
-		LocalDate start=null, end=null;
-		
+	public static Map<LocalDate, Enum> changeOff (OperationMode mode, int remaining, int planned, Map<LocalDate, Enum> yearMap) {
 
-		if ((mode==1) && (remaining==0)){
+		Scanner sc = new Scanner(System.in);
+
+		LocalDate start=null, end=null;
+
+
+		if ((mode == OperationMode.SET) && (remaining == 0)){
 			System.out.println("Nie masz urlopu do wykorzystania!");
 		}
-		else if ((mode==2) && (planned==0)){
+		else if ((mode == OperationMode.CANCEL) && (planned == 0)){
 			System.out.println("Nie masz rozpisanego urlopu do anulowania!");
 		}
 		else
-			
-		{	if ((mode==1) && (remaining>0)){
-			
+
+		{	if ((mode == OperationMode.SET) && (remaining > 0)){
+
 			System.out.println("TRYB: Rozpisanie urlopu");
-			
-		}
-		
-		
-		
-		else if ((mode==2) && (planned>0)){
-			
-			System.out.println("TRYB: Anulowanie urlopu");
-			
 
 		}
-		
+
+
+
+		else if ((mode == OperationMode.CANCEL) && (planned > 0)){
+
+			System.out.println("TRYB: Anulowanie urlopu");
+
+
+		}
+
 		Boolean validD=false, validA = false, trigger, change=false;
-		
-		
+
+
 		/* asking for dates */
 		do {
 			trigger = false;																//exception error trigger
@@ -49,36 +51,36 @@ public class Modifier {
 				start = LocalDate.parse(sc.nextLine());
 				System.out.print("Podaj koniec w formacie RRRR-MM-DD: ");
 				end = LocalDate.parse(sc.nextLine());
-			
-			
+
+
 				validD = dateValidator(start, end);											//checking the validity of dates (not from the past, in proper order and so on)
-				
-				if (mode==1) {
+
+				if (mode == OperationMode.SET) {
 					validA = allowanceValidator(start.until(end, ChronoUnit.DAYS), remaining);			//checking if remaining allowance is larger than planned off days
 				}
 				else validA=true;
-			
+
 			} catch (DateTimeParseException e) {
 				System.out.println("Błędny format daty!");
 				trigger = true;
 			}
-		
+
 		} while (validD==false || validA==false || trigger==true);
-		
-		
+
+
 		for (int i=0;i<=(start.until(end, ChronoUnit.DAYS));i++) {										//iterating from the beginning to the end of off/anulation period
 
-			
+
 			LocalDate curDay = start.plusDays(i);
-			
-			int curDayStatus = yearMap.get(LocalDate.ofYearDay(curDay.getYear(), curDay.getDayOfYear()));
-			
-			if(curDayStatus == 0 && mode == 1) {															//checking if current day from the period is working 
-				yearMap.put(curDay, 1);																		//setting it to off day
+
+			Enum curDayStatus = yearMap.get(LocalDate.ofYearDay(curDay.getYear(), curDay.getDayOfYear()));
+
+			if(curDayStatus == OffMode.WORKING && mode == OperationMode.SET) {															//checking if current day from the period is working
+				yearMap.put(curDay, OffMode.OFF);																		//setting it to off day
 				change = true;
 			}
-			else if(curDayStatus == 1 && mode == 2) {														//checking if current day from the period is off 
-				yearMap.put(curDay, 0);																		//setting it to working day
+			else if(curDayStatus == OffMode.OFF && mode == OperationMode.CANCEL) {														//checking if current day from the period is off
+				yearMap.put(curDay, OffMode.WORKING);																		//setting it to working day
 				change = true;
 			}
 		}
