@@ -9,19 +9,19 @@ import static main.Enums.OperationMode;
 public class Main {
 
 	public static void main(String[] args) {
-		
-		
+
+
 		int curYear = LocalDate.now().getYear();
 		int nextYear = LocalDate.now().getYear()+1;
-		
+
 		String offBinary = Reader.dataFromFile("off_forCancel.txt");
 		int totalOffCount = 90;
-		
+
 		OperationMode mode = OperationMode.DEFAULT;
 		Boolean trigger;
-		
-		Map<LocalDate, Integer> curYearMap = Mapper.generateMap(offBinary, curYear);
-		
+
+		Map<LocalDate, Enum> curYearMap = Mapper.generateMap(offBinary, curYear);
+
 		Counter curCount = new Counter(curYearMap, totalOffCount);
 		int plannedOffCount = curCount.getPlanned();
 		int usedOffCount = curCount.getUsed();
@@ -31,7 +31,7 @@ public class Main {
 
 		System.out.println("Witaj w programie ===Urlopik===");
 		System.out.println("©2018 by MZ\n");
-		
+
 		do {
 			trigger = false;
 			try {
@@ -43,11 +43,11 @@ public class Main {
 
 				System.out.println("\nTwoje obecnie zaplanowane okresy urlopu to:");
 				Printer.offPeriodsDisplay(curYearMap);
-				
+
 				System.out.println();
 				curCount.summary();
-				
-				
+
+
 				System.out.println("\nCo chciałbyś zrobić?");
 				System.out.println("\t1) dopisać urlop");
 				System.out.println("\t2) anulować urlop");
@@ -62,17 +62,17 @@ public class Main {
 				else if (mode == OperationMode.EXIT)
                 {System.out.println("Do widzenia!");
 					break;}
-				
+
 				System.out.println();
 
-				
+
 			} catch (Exception e) {
 //				e.printStackTrace();
 				trigger = true;
 //				sc.next();
-			} 
-			
-		
+			}
+
+
 
 		} while (mode != OperationMode.EXIT || trigger == true);
 		

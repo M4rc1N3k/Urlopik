@@ -2,28 +2,28 @@ package main;
 
 public class Enums {
 
-    public enum Kolor {
-
-        CZERWONY(false),
-        ZIELONY(true),
-        NIEBIESKI(true);
-
-        boolean ladny;
-
-        private Kolor(boolean czyLadny) {
-            ladny = czyLadny;
-        }
-    }
-
     public enum OffMode {
-        //TODO: assign values to enums
+
         WORKING,
         OFF,
         HOLIDAY;
 
+
+        public static OffMode fromInt (int x){
+            switch (x){
+                case 0:
+                    return WORKING;
+                case 1:
+                    return OFF;
+                case 2:
+                    return HOLIDAY;
+            }
+            return null;
+        }
     }
 
     public enum OperationMode {
+
         SET,
         CANCEL,
         EXIT,

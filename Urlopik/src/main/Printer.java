@@ -4,10 +4,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import static main.Enums.OffMode;
 
 public class Printer {
 		
-	public static List<String[]> offPeriodsDisplay (Map<LocalDate, Integer> yearMap) {
+	public static List<String[]> offPeriodsDisplay (Map<LocalDate, Enum> yearMap) {
 		
 		List<String[]> offPeriodsList = new ArrayList<>();
 		
@@ -17,28 +18,28 @@ public class Printer {
 		int iterator=0;
 		Boolean trig = false;	//for signalizing if off periods are linked by free days
 		
-		for (Map.Entry<LocalDate, Integer> entry : yearMap.entrySet()) {
+		for (Map.Entry<LocalDate, Enum> entry : yearMap.entrySet()) {
 			
 			LocalDate currentDay = entry.getKey();
 			LocalDate previousDay = entry.getKey().minusDays(1);
 			LocalDate nextDay = entry.getKey().plusDays(1);
 			
-			if ((yearMap.get(currentDay)==1) && ((iterator==0) || (yearMap.get(previousDay)!=1)))					//finds the beginning of a single off period
+			if ((yearMap.get(currentDay) == OffMode.OFF) && ((iterator==0) || (yearMap.get(previousDay) != OffMode.OFF)))					//finds the beginning of a single off period
 				{a = currentDay.toString();
 				tempDay = currentDay.minusDays(1);
 					
-				while (((tempDay.getDayOfYear() >= 1) && (tempDay.getYear() == currentDay.getYear())) && (yearMap.get(tempDay) == 2)) {										//checks how many free days precedes off period
+				while (((tempDay.getDayOfYear() >= 1) && (tempDay.getYear() == currentDay.getYear())) && (yearMap.get(tempDay) == OffMode.HOLIDAY)) {										//checks how many free days precedes off period
 					c++;
 					tempDay = tempDay.minusDays(1);
 				}
 					
 				}
 			
-			if ((yearMap.get(currentDay)==1) && ((iterator==yearMap.size()-1) || (yearMap.get(nextDay)!=1)))		//finds the end of a single off period
+			if ((yearMap.get(currentDay) == OffMode.OFF) && ((iterator == yearMap.size()-1) || (yearMap.get(nextDay) != OffMode.OFF)))		//finds the end of a single off period
 				{b = currentDay.toString();
 				tempDay = currentDay.plusDays(1);
 				
-				while (((tempDay.getDayOfYear() <= (365+(tempDay.isLeapYear() ? 1 : 0))) && (tempDay.getYear() == currentDay.getYear())) && (yearMap.get(tempDay) == 2)) {		//checks how many free days follows off period !YEAR SENSITIVE!
+				while (((tempDay.getDayOfYear() <= (365+(tempDay.isLeapYear() ? 1 : 0))) && (tempDay.getYear() == currentDay.getYear())) && (yearMap.get(tempDay) == OffMode.HOLIDAY)) {		//checks how many free days follows off period !YEAR SENSITIVE!
 						d++;
 						tempDay = tempDay.plusDays(1);
 					}
@@ -64,7 +65,7 @@ public class Printer {
 				
 				if (d!=0)															//when off period is followed by free days
 					{
-					if ((LocalDate.parse(b).plusDays(d+1).getYear() == currentDay.getYear()) && (yearMap.get(LocalDate.parse(b).plusDays(d+1)) == 1))					///when after off period followed by free days another off period starts !YEAR SENSITIVE!
+					if ((LocalDate.parse(b).plusDays(d+1).getYear() == currentDay.getYear()) && (yearMap.get(LocalDate.parse(b).plusDays(d+1)) == OffMode.OFF))					///when after off period followed by free days another off period starts !YEAR SENSITIVE!
 						trig = true;															//switches trigger on and omit saving the free days number (they will be added before next off period starts)
 					else
 						{String y_part = "("+d+" dni wolne)";								
