@@ -55,7 +55,8 @@ public class Modifier {
 				validD = dateValidator(start, end);											//checking the validity of dates (not from the past, in proper order and so on)
 
 				if (mode == OperationMode.SET) {
-					validA = allowanceValidator(start.until(end, ChronoUnit.DAYS), remaining);			//checking if remaining allowance is larger than planned off days
+					int plannedWorking = calcEstimatedOffLength(yearMap, start, end);
+					validA = allowanceValidator(plannedWorking, remaining);			//checking if remaining allowance is larger than planned off days
 				}
 				else validA=true;
 
@@ -113,12 +114,31 @@ public class Modifier {
 		
 	}
 	
-	private static Boolean allowanceValidator (long tempPlanned, int remaining) {
+	private static Boolean allowanceValidator (int tempPlanned, int remaining) {
 		if (tempPlanned > remaining) {
 			System.out.println("Nie masz tylu dni do wykorzystania. \nPlanowałeś rozpisać ich "+tempPlanned+" a pozostało zaledwie "+remaining+".\n");
 			return false;
 		}
 		else return true;
+	}
+
+	private static int calcEstimatedOffLength(Map<LocalDate, Enum> yearMap, LocalDate start, LocalDate end) {
+
+		int estimated=0;
+		LocalDate day = start;
+
+		int iterator = start.getDayOfYear();
+		while (iterator <= end.getDayOfYear()) {
+
+			if (yearMap.get(day) == OffMode.WORKING) {
+				estimated++;
+			}
+
+			day = day.plusDays(1);
+			iterator++;
+		}
+
+		return estimated;
 	}
 	
 }
