@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import static main.Enums.OffMode;
+
 
 public class Mapper {
 	
 	
 	
-	public static Map<LocalDate, Enum> generateMap (String offBinary, int year) {
+	public static Map<LocalDate, OffMode> generateMap (String offBinary, int year) {
 		int a = offBinary.length();
 		char array[] = offBinary.toCharArray();
 		List <Integer> listInt = new ArrayList<Integer>(); 
@@ -30,7 +30,7 @@ public class Mapper {
 	List<LocalDate> holidaysList = Holidays.holidaysList(String.valueOf(year));
 	
 	LocalDate date = LocalDate.parse(String.valueOf(year+"-01-01"));	
-	Map<LocalDate, Enum> yearMap = new TreeMap<>();
+	Map<LocalDate, OffMode> yearMap = new TreeMap<>();
 		for (int i=0;i<yearLength;i++) {
 			if (isHoliday(date, holidaysList))
 				yearMap.put(date, OffMode.HOLIDAY); //digit "2" marks holiday

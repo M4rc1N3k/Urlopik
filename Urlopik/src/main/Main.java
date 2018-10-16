@@ -3,7 +3,6 @@ package main;
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.Scanner;
-import static main.Enums.OperationMode;
 
 
 public class Main {
@@ -20,7 +19,7 @@ public class Main {
 		OperationMode mode = OperationMode.DEFAULT;
 		Boolean trigger;
 
-		Map<LocalDate, Enum> curYearMap = Mapper.generateMap(offBinary, curYear);
+		Map<LocalDate, OffMode> curYearMap = Mapper.generateMap(offBinary, curYear);
 
 		Counter curCount = new Counter(curYearMap, totalOffCount);
 		int plannedOffCount = curCount.getPlanned();

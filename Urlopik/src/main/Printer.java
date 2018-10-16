@@ -4,11 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import static main.Enums.OffMode;
 
 public class Printer {
 		
-	public static List<String[]> offPeriodsDisplay (Map<LocalDate, Enum> yearMap) {
+	public static List<String[]> offPeriodsDisplay (Map<LocalDate, OffMode> yearMap) {
 		
 		List<String[]> offPeriodsList = new ArrayList<>();
 		
@@ -18,7 +17,7 @@ public class Printer {
 		int iterator=0;
 		Boolean trig = false;	//for signalizing if off periods are linked by free days
 		
-		for (Map.Entry<LocalDate, Enum> entry : yearMap.entrySet()) {
+		for (Map.Entry<LocalDate, OffMode> entry : yearMap.entrySet()) {
 			
 			LocalDate currentDay = entry.getKey();
 			LocalDate previousDay = entry.getKey().minusDays(1);

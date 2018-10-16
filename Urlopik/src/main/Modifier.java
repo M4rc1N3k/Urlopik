@@ -5,12 +5,11 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Scanner;
-import static main.Enums.OperationMode;
-import static main.Enums.OffMode;
+
 
 public class Modifier {
 
-	public static Map<LocalDate, Enum> changeOff (OperationMode mode, int remaining, int planned, Map<LocalDate, Enum> yearMap) {
+	public static Map<LocalDate, OffMode> changeOff (OperationMode mode, int remaining, int planned, Map<LocalDate, OffMode> yearMap) {
 
 		Scanner sc = new Scanner(System.in);
 
@@ -72,7 +71,7 @@ public class Modifier {
 
 
 			LocalDate curDay = start.plusDays(i);
-			Enum curDayStatus = yearMap.get(LocalDate.ofYearDay(curDay.getYear(), curDay.getDayOfYear()));
+			OffMode curDayStatus = yearMap.get(LocalDate.ofYearDay(curDay.getYear(), curDay.getDayOfYear()));
 
 			if(curDayStatus == OffMode.WORKING && mode == OperationMode.SET) {															//checking if current day from the period is working
 				yearMap.put(curDay, OffMode.OFF);																		//setting it to off day
@@ -122,7 +121,7 @@ public class Modifier {
 		else return true;
 	}
 
-	private static int calcEstimatedOffLength(Map<LocalDate, Enum> yearMap, LocalDate start, LocalDate end) {
+	private static int calcEstimatedOffLength(Map<LocalDate, OffMode> yearMap, LocalDate start, LocalDate end) {
 
 		int estimated=0;
 		LocalDate day = start;

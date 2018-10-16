@@ -2,7 +2,6 @@ package main;
 
 import java.time.LocalDate;
 import java.util.Map;
-import static main.Enums.OffMode;
 
 public class Counter {
 
@@ -12,14 +11,14 @@ public class Counter {
 	private int total, planned, used, remaining;
 	
 			
-	public Counter(Map<LocalDate, Enum> yearMap, int total) {
+	public Counter(Map<LocalDate, OffMode> yearMap, int total) {
 		this.total = total;
 		this.planned = calcPlanned(yearMap);
 		this.used = calcUsed(yearMap);
 		this.remaining = calcRemaining(total, yearMap);
 	}
 	
-	private static int calcPlanned (Map<LocalDate, Enum> yearMap) {
+	private static int calcPlanned (Map<LocalDate, OffMode> yearMap) {
 		
 		int planned=0;
 		LocalDate day = today;
@@ -38,7 +37,7 @@ public class Counter {
 	return planned;
 	}
 	
-	private static int calcUsed (Map<LocalDate, Enum> yearMap) {
+	private static int calcUsed (Map<LocalDate, OffMode> yearMap) {
 		
 		int used=0;
 		LocalDate day = LocalDate.parse(String.valueOf(today.getYear()+"-01-01"));
@@ -55,7 +54,7 @@ public class Counter {
 	return used;
 	}
 	
-	private static int calcRemaining (int total, Map<LocalDate, Enum> yearMap) {
+	private static int calcRemaining (int total, Map<LocalDate, OffMode> yearMap) {
 		int remaining = total - calcUsed(yearMap) - calcPlanned(yearMap);
 		
 		return remaining;
