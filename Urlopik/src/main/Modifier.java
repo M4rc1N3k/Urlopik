@@ -64,8 +64,8 @@ public class Modifier {
 				trigger = true;
 			}
 
-		} while (validD==false || validA==false || trigger==true);
-
+//		} while (validD==false || validA==false || trigger==true);
+		} while (multipleValidator(validA, validD, trigger) == false);
 
 		for (int i=0;i<=(start.until(end, ChronoUnit.DAYS));i++) {										//iterating from the beginning to the end of off/anulation period
 
@@ -139,5 +139,14 @@ public class Modifier {
 
 		return estimated;
 	}
-	
+
+	private static Boolean multipleValidator (Boolean validAllowance, Boolean validDate, Boolean errorTrigger){
+
+		if (validAllowance && validDate && !errorTrigger)
+			return true;
+		else
+			return false;
+
+	}
+
 }
