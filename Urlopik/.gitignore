@@ -81,6 +81,11 @@ fabric.properties
 # Sonarlint plugin
 .idea/sonarlint
 
+# Compiled files
+*.class
+
+# Entire .idea directory
+.idea/
 
 # End of https://www.gitignore.io/api/intellij
 
