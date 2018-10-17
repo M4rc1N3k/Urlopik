@@ -53,11 +53,9 @@ public class Modifier {
 
 				validD = dateValidator(start, end);											//checking the validity of dates (not from the past, in proper order and so on)
 
-				if (mode == OperationMode.SET) {
-					int plannedWorking = calcEstimatedOffLength(yearMap, start, end);
-					validA = allowanceValidator(plannedWorking, remaining);			//checking if remaining allowance is larger than planned off days
-				}
-				else validA=true;
+
+				validA = allowanceValidator(mode, yearMap, start, end, remaining);			//checking if remaining allowance is larger than planned off days
+
 
 			} catch (DateTimeParseException e) {
 				System.out.println("Błędny format daty!");
@@ -112,12 +110,20 @@ public class Modifier {
 		
 	}
 	
-	private static Boolean allowanceValidator (int tempPlanned, int remaining) {
-		if (tempPlanned > remaining) {
-			System.out.println("Nie masz tylu dni do wykorzystania. \nPlanowałeś rozpisać ich "+tempPlanned+" a pozostało zaledwie "+remaining+".\n");
-			return false;
-		}
-		else return true;
+	private static Boolean allowanceValidator (OperationMode mode, Map<LocalDate, OffMode> yearMap, LocalDate start, LocalDate end, int remaining) {
+
+		if (mode == OperationMode.CANCEL)
+			return true;
+
+		else
+			{int tempEstimated = calcEstimatedOffLength(yearMap, start, end);
+
+			if (tempEstimated > remaining)
+				{System.out.println("Nie masz tylu dni do wykorzystania. \nPlanowałeś rozpisać ich "+tempEstimated+" a pozostało zaledwie "+remaining+".\n");
+				return false;}
+
+				else return true;
+			}
 	}
 
 	private static int calcEstimatedOffLength(Map<LocalDate, OffMode> yearMap, LocalDate start, LocalDate end) {
