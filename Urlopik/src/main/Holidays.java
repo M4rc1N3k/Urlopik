@@ -23,9 +23,8 @@ public class Holidays {
 		holidaysList.add(LocalDate.parse(year+"-12-26"));		//Christmas (2nd day)
 		
 		
-		//TODO: algorithm for calculating Easter
-		LocalDate easter = LocalDate.parse("0000-01-01");
-		
+		LocalDate easter;
+
 		easter = easterCalculator(Integer.parseInt(year));
 		
 		holidaysList.add(easter);								//Easter
@@ -54,15 +53,17 @@ public class Holidays {
 		
 		day = 1+n%31;
 		
-		if (n/31 == 3)
+		if (n/31 == 3) {
 			month = 3;
-		else
+		} else {
 			month = 4;
+		}
 		
-		if (day/10 > 0)
+		if (day/10 > 0) {
 			easterSt = year+"-0"+month+"-"+day;
-		else
+		} else {
 			easterSt = year+"-0"+month+"-0"+day;
+		}
 		
 		easter = LocalDate.parse(easterSt);
 		
