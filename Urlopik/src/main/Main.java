@@ -17,7 +17,7 @@ public class Main {
 		int totalOffCount = 90;
 
 		OperationMode mode = OperationMode.DEFAULT;
-		Boolean trigger;
+		Boolean errorTrigger;
 
 		Map<LocalDate, OffMode> curYearMap = Mapper.generateMap(offBinary, curYear);
 
@@ -32,7 +32,7 @@ public class Main {
 		System.out.println("©2018 by MZ\n");
 
 		do {
-			trigger = false;
+			errorTrigger = false;
 			try {
 
 				curCount = new Counter(curYearMap, totalOffCount);
@@ -56,7 +56,7 @@ public class Main {
 
 				if (mode == OperationMode.SET || mode == OperationMode.CANCEL)
 					{curYearMap = Modifier.changeOff(mode, remainingOffCount, plannedOffCount, curYearMap);
-					//TODO: zapis mapy do pliku
+					//TODO: saving map to the output file
 					}
 				else if (mode == OperationMode.EXIT)
                 {System.out.println("Do widzenia!");
@@ -67,13 +67,13 @@ public class Main {
 
 			} catch (Exception e) {
 //				e.printStackTrace();
-				trigger = true;
+				errorTrigger = true;
 //				sc.next();
 			}
 
 
 
-		} while (mode != OperationMode.EXIT || trigger == true);
+		} while (mode != OperationMode.EXIT || errorTrigger == true);
 		
 		sc.close();
 		

@@ -19,7 +19,6 @@ public class Reader {
 		}
 		
 		String all = sb.toString();
-//		System.out.println(all);
 		return all;
 	}
 	catch (FileNotFoundException e) {
