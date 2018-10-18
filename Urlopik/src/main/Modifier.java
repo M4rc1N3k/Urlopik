@@ -6,84 +6,74 @@ import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Scanner;
 
+
 public class Modifier {
 
-	public static Map<LocalDate, Integer> changeOff (int mode, int remaining, int planned,  Map<LocalDate, Integer> yearMap) {
-		
-		Scanner sc = new Scanner(System.in);
-		
-		LocalDate start=null, end=null;
-		
+	public static Map<LocalDate, OffMode> changeOff (OperationMode mode, int remaining, int planned, Map<LocalDate, OffMode> yearMap) {
 
-		if ((mode==1) && (remaining==0)){
+		Scanner sc = new Scanner(System.in);
+
+		LocalDate start=null, end=null;
+
+		if ((mode == OperationMode.SET) && (remaining == 0)){
 			System.out.println("Nie masz urlopu do wykorzystania!");
 		}
-		else if ((mode==2) && (planned==0)){
+		else if ((mode == OperationMode.CANCEL) && (planned == 0)){
 			System.out.println("Nie masz rozpisanego urlopu do anulowania!");
 		}
 		else
-			
-		{	if ((mode==1) && (remaining>0)){
-			
-			System.out.println("TRYB: Rozpisanie urlopu");
-			
-		}
-		
-		
-		
-		else if ((mode==2) && (planned>0)){
-			
-			System.out.println("TRYB: Anulowanie urlopu");
-			
 
+		{	if ((mode == OperationMode.SET) && (remaining > 0)){
+
+			System.out.println("TRYB: Rozpisanie urlopu");
 		}
-		
-		Boolean validD=false, validA = false, trigger, change=false;
-		
-		
-		/* asking for dates */
+
+		else if ((mode == OperationMode.CANCEL) && (planned > 0)){
+
+			System.out.println("TRYB: Anulowanie urlopu");
+		}
+
+		Boolean validD=false, validA = false, dateFormatErrorTrigger, yearMapChange=false;
+
+
 		do {
-			trigger = false;																//exception error trigger
-			try {																			//checking the validity of input date format
+			dateFormatErrorTrigger = false;
+			try {
 				System.out.print("Podaj początek w formacie RRRR-MM-DD: ");
 				start = LocalDate.parse(sc.nextLine());
 				System.out.print("Podaj koniec w formacie RRRR-MM-DD: ");
 				end = LocalDate.parse(sc.nextLine());
-			
-			
-				validD = dateValidator(start, end);											//checking the validity of dates (not from the past, in proper order and so on)
-				
-				if (mode==1) {
-					validA = allowanceValidator(start.until(end, ChronoUnit.DAYS), remaining);			//checking if remaining allowance is larger than planned off days
-				}
-				else validA=true;
-			
+
+
+				validD = dateValidator(start, end);
+
+				validA = allowanceValidator(mode, yearMap, start, end, remaining);
+
+
 			} catch (DateTimeParseException e) {
 				System.out.println("Błędny format daty!");
-				trigger = true;
+				dateFormatErrorTrigger = true;
 			}
-		
-		} while (validD==false || validA==false || trigger==true);
-		
-		
-		for (int i=0;i<=(start.until(end, ChronoUnit.DAYS));i++) {										//iterating from the beginning to the end of off/anulation period
 
-			
-			LocalDate curDay = start.plusDays(i);
-			
-			int curDayStatus = yearMap.get(LocalDate.ofYearDay(curDay.getYear(), curDay.getDayOfYear()));
-			
-			if(curDayStatus == 0 && mode == 1) {															//checking if current day from the period is working 
-				yearMap.put(curDay, 1);																		//setting it to off day
-				change = true;
+		} while (multipleValidator(validA, validD, dateFormatErrorTrigger) == false);
+
+		for (int i=0;i<=(start.until(end, ChronoUnit.DAYS));i++) {
+
+
+			LocalDate currentDay = start.plusDays(i);
+			OffMode currentDayStatus = yearMap.get(LocalDate.ofYearDay(currentDay.getYear(), currentDay.getDayOfYear()));
+
+			if(currentDayStatus == OffMode.WORKING && mode == OperationMode.SET) {
+				yearMap.put(currentDay, OffMode.OFF);
+				yearMapChange = true;
 			}
-			else if(curDayStatus == 1 && mode == 2) {														//checking if current day from the period is off 
-				yearMap.put(curDay, 0);																		//setting it to working day
-				change = true;
+			else if(currentDayStatus == OffMode.OFF && mode == OperationMode.CANCEL) {
+				yearMap.put(currentDay, OffMode.WORKING);
+				yearMapChange = true;
 			}
 		}
 		
-		if (change == true)
+		if (yearMapChange == true)
 			System.out.println("Zmiana wprowadzona.");
 		else
 			System.out.println("Brak wprowadzonych zmian.");
@@ -100,25 +90,64 @@ public class Modifier {
 		if (st.until(en, ChronoUnit.DAYS)<0)
 			{System.out.println("Data końca zakresu nie może poprzedzać daty początku zakresu.\n");
 			return false;}
-		else if (st.compareTo(LocalDate.now())<0)														//unlock this condition after finish of testing
+		else if (st.compareTo(LocalDate.now())<0)
 			{System.out.println("Nie można modyfikować urlopu post factum.\n");
 			return false;}
-//		else if (en.getYear()>(LocalDate.now().getYear()+1))											//unlock this condition after implementing use of the following year
+//		else if (en.getYear()>(LocalDate.now().getYear()+1))											//TODO: unlock this condition after implementing use of the following year
 //			{System.out.println("Można modyfikować urlop nie dalej niż w roku następnym.\n");
 		else if (en.getYear()>LocalDate.now().getYear())
 			{System.out.println("Można modyfikować urlop nie dalej niż w roku bieżącym.\n");
 			return false;}
-		else 
+		else {
 			return true;
+		}
 		
 	}
 	
-	private static Boolean allowanceValidator (long tempPlanned, int remaining) {
-		if (tempPlanned > remaining) {
-			System.out.println("Nie masz tylu dni do wykorzystania. \nPlanowałeś rozpisać ich "+tempPlanned+" a pozostało zaledwie "+remaining+".\n");
+	private static Boolean allowanceValidator (OperationMode mode, Map<LocalDate, OffMode> yearMap, LocalDate start, LocalDate end, int remaining) {
+
+		if (mode == OperationMode.CANCEL) {
+			return true;
+		} else
+			{int tempEstimated = calcEstimatedOffLength(yearMap, start, end);
+
+			if (tempEstimated > remaining)
+				{System.out.println("Nie masz tylu dni do wykorzystania. \nPlanowałeś rozpisać ich "+tempEstimated+" a pozostało zaledwie "+remaining+".\n");
+				return false;}
+
+			else {
+				return true;
+			}
+			}
+	}
+
+	private static int calcEstimatedOffLength(Map<LocalDate, OffMode> yearMap, LocalDate start, LocalDate end) {
+
+		int estimated=0;
+		LocalDate day = start;
+
+		int iterator = start.getDayOfYear();
+		while (iterator <= end.getDayOfYear()) {
+
+			if (yearMap.get(day) == OffMode.WORKING) {
+				estimated++;
+			}
+
+			day = day.plusDays(1);
+			iterator++;
+		}
+
+		return estimated;
+	}
+
+	private static Boolean multipleValidator (Boolean validAllowance, Boolean validDate, Boolean errorTrigger){
+
+		if (validAllowance && validDate && !errorTrigger) {
+			return true;
+		} else {
 			return false;
 		}
-		else return true;
+
 	}
-	
+
 }
