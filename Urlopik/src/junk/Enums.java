@@ -1,4 +1,4 @@
-package test;
+package junk;
 
 public class Enums {
 
