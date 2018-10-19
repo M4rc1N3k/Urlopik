@@ -1,4 +1,4 @@
-package junk;
+package main.resources;
 
 public class Enums {
 

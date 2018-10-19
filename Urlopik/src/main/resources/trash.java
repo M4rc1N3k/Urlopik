@@ -1,4 +1,4 @@
-package junk;
+package main.resources;
 
 import java.time.LocalDate;
 
