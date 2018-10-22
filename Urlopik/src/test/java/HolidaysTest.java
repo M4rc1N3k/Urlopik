@@ -45,7 +45,7 @@ public class HolidaysTest {
             tabbedDate = LocalDate.parse(verificationFileScanner.nextLine());
 
             try {
-                calcDate = LocalDate.parse(ec.invoke(null,i).toString());
+                calcDate = (LocalDate)ec.invoke(null,i);
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }

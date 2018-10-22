@@ -90,9 +90,9 @@ public class Modifier {
 		if (st.until(en, ChronoUnit.DAYS)<0)
 			{System.out.println("Data końca zakresu nie może poprzedzać daty początku zakresu.\n");
 			return false;}
-		else if (st.compareTo(LocalDate.now())<0)
-			{System.out.println("Nie można modyfikować urlopu post factum.\n");
-			return false;}
+//		else if (st.compareTo(LocalDate.now())<0)
+//			{System.out.println("Nie można modyfikować urlopu post factum.\n");
+//			return false;}
 //		else if (en.getYear()>(LocalDate.now().getYear()+1))											//TODO: unlock this condition after implementing use of the following year
 //			{System.out.println("Można modyfikować urlop nie dalej niż w roku następnym.\n");
 		else if (en.getYear()>LocalDate.now().getYear())
