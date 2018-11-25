@@ -30,7 +30,7 @@ public class Main {
         OperationMode mode = OperationMode.DEFAULT;
         Boolean errorTrigger;
 
-        Map<LocalDate, OffMode> curYearMap = Mapper.generateMap(offBinary, curYear);
+        Map<LocalDate, OffMode> curYearMap = new Mapper(offBinary, curYear).getYearMap();
 
         Counter curCount = new Counter(curYearMap, totalOffCount);
         int plannedOffCount = curCount.calcPlanned();
