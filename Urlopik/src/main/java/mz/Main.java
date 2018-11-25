@@ -2,6 +2,7 @@ package mz;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
+import org.apache.commons.lang.math.NumberUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,8 +12,7 @@ import java.util.Scanner;
 
 
 public class Main {
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws IllegalArgumentException {
 
         int curYear = LocalDate.now().getYear();
         int nextYear = LocalDate.now().getYear() + 1;
@@ -28,7 +28,6 @@ public class Main {
         int totalOffCount = 90;
 
         OperationMode mode = OperationMode.DEFAULT;
-        Boolean errorTrigger;
 
         Map<LocalDate, OffMode> curYearMap = new Mapper(offBinary, curYear).getYearMap();
 
@@ -43,8 +42,7 @@ public class Main {
         System.out.println("©2018 by MZ\n");
 
         do {
-            errorTrigger = false;
-            try {
+                IllegalArgumentException argumentException = new IllegalArgumentException();
 
                 curCount = new Counter(curYearMap, totalOffCount);
                 plannedOffCount = curCount.calcPlanned();
@@ -57,33 +55,38 @@ public class Main {
                 System.out.println();
                 summary(totalOffCount, plannedOffCount, usedOffCount, remainingOffCount );
 
+                while(true) {
+                try {
+                    System.out.println("\nCo chciałbyś zrobić?");
+                    System.out.println("\t1) dopisać urlop");
+                    System.out.println("\t2) anulować urlop");
+                    System.out.println("\t3) zakończyć program");
 
-                System.out.println("\nCo chciałbyś zrobić?");
-                System.out.println("\t1) dopisać urlop");
-                System.out.println("\t2) anulować urlop");
-                System.out.println("\t3) zakończyć program");
+                    String readMode = sc.next();
+                    if (!NumberUtils.isNumber(readMode)) throw argumentException;
+                    if (Integer.parseInt(readMode) / 4 != 0) throw argumentException;
+                    mode = OperationMode.fromInt(Integer.parseInt(readMode));
 
-                mode = OperationMode.fromInt(Integer.parseInt(sc.next()));
 
-                if (mode == OperationMode.SET || mode == OperationMode.CANCEL) {
-                    curYearMap = Modifier.changeOff(mode, remainingOffCount, plannedOffCount, curYearMap);
-                    //TODO: saving map to the output file
-                } else if (mode == OperationMode.EXIT) {
-                    System.out.println("Do widzenia!");
-                    break;
+                    if (mode == OperationMode.SET || mode == OperationMode.CANCEL) {
+                        curYearMap = Modifier.changeOff(mode, remainingOffCount, plannedOffCount, curYearMap);
+                        //TODO: saving map to the output file
+                        break;
+                    } else if (mode == OperationMode.EXIT) {
+                        System.out.println("Do widzenia!");
+                        break;
+                    }
+
+                    System.out.println();
+
+
+                } catch (IllegalArgumentException e) {
+
+                    System.out.println("Błędny wybór trybu! Wybierz jeszcze raz");
                 }
-
-                System.out.println();
-
-
-            } catch (Exception e) {
-//				e.printStackTrace();
-                errorTrigger = true;
-//				sc.next();
             }
 
-
-        } while (mode != OperationMode.EXIT || errorTrigger == true);
+        } while (mode != OperationMode.EXIT);
 
         sc.close();
 
