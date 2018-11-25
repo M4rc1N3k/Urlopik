@@ -20,7 +20,7 @@ public class Main {
         File file = new File("off_forCancel.txt");
         String offBinary = null;
         try {
-            offBinary = Files.toString(file, Charsets.UTF_8);
+            offBinary = Files.asCharSource(file, Charsets.UTF_8).read();
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
