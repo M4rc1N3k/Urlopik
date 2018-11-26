@@ -12,7 +12,7 @@ public class Mapper {
 		this.yearMap=generateMap(offBinary, year);
 	}
     public Map<LocalDate, OffMode> getYearMap() {
-        return yearMap;
+        return this.yearMap;
     }
 
 	private Map<LocalDate, OffMode> generateMap(String offBinary, int year) {

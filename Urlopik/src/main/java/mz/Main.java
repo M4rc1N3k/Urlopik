@@ -42,8 +42,6 @@ public class Main {
         System.out.println("©2018 by MZ\n");
 
         do {
-                //IllegalArgumentException argumentException = ;
-
                 curCount = new Counter(curYearMap, totalOffCount);
                 plannedOffCount = curCount.calcPlanned();
                 usedOffCount = curCount.calcUsed();
@@ -63,7 +61,7 @@ public class Main {
                     System.out.println("\t3) zakończyć program");
 
                     String readMode = sc.next();
-                    
+
                 try {
                     if (!NumberUtils.isNumber(readMode)) throw new IllegalArgumentException();
                     if (Integer.parseInt(readMode) / 4 != 0) throw new IllegalArgumentException();
@@ -71,7 +69,7 @@ public class Main {
 
 
                     if (mode == OperationMode.SET || mode == OperationMode.CANCEL) {
-                        curYearMap = Modifier.changeOff(mode, remainingOffCount, plannedOffCount, curYearMap);
+                        curYearMap = new Modifier(mode, remainingOffCount, plannedOffCount, curYearMap).getModifiedYearMap();
                         //TODO: saving map to the output file
                         break;
                     } else if (mode == OperationMode.EXIT) {

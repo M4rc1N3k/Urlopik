@@ -9,7 +9,17 @@ import java.util.Scanner;
 
 public class Modifier {
 
-	public static Map<LocalDate, OffMode> changeOff (OperationMode mode, int remaining, int planned, Map<LocalDate, OffMode> yearMap) {
+	private Map<LocalDate, OffMode> modifiedYearMap;
+
+	public Modifier(OperationMode mode, int remaining, int planned, Map<LocalDate, OffMode> yearMap) {
+		this.modifiedYearMap = changeOff(mode, remaining, planned, yearMap);
+	}
+
+	public Map<LocalDate, OffMode> getModifiedYearMap() {
+		return this.modifiedYearMap;
+	}
+
+	private Map<LocalDate, OffMode> changeOff (OperationMode mode, int remaining, int planned, Map<LocalDate, OffMode> yearMap) {
 
 		Scanner sc = new Scanner(System.in);
 
@@ -33,11 +43,10 @@ public class Modifier {
 			System.out.println("TRYB: Anulowanie urlopu");
 		}
 
-		Boolean validD=false, validA = false, dateFormatErrorTrigger, yearMapChange=false;
+		Boolean validD=false, validA = false, yearMapChange=false;
 
 
 		do {
-			dateFormatErrorTrigger = false;
 			try {
 				System.out.print("Podaj początek w formacie RRRR-MM-DD: ");
 				start = LocalDate.parse(sc.nextLine());
@@ -52,10 +61,9 @@ public class Modifier {
 
 			} catch (DateTimeParseException e) {
 				System.out.println("Błędny format daty!");
-				dateFormatErrorTrigger = true;
 			}
 
-		} while (multipleValidator(validA, validD, dateFormatErrorTrigger) == false);
+		} while (multipleValidator(validA, validD) == false);
 
 		for (int i=0;i<=(start.until(end, ChronoUnit.DAYS));i++) {
 
@@ -85,7 +93,7 @@ public class Modifier {
 	
 	
 	
-	private static Boolean dateValidator (LocalDate st, LocalDate en) {
+	private Boolean dateValidator (LocalDate st, LocalDate en) {
 		
 		if (st.until(en, ChronoUnit.DAYS)<0)
 			{System.out.println("Data końca zakresu nie może poprzedzać daty początku zakresu.\n");
@@ -104,7 +112,7 @@ public class Modifier {
 		
 	}
 	
-	private static Boolean allowanceValidator (OperationMode mode, Map<LocalDate, OffMode> yearMap, LocalDate start, LocalDate end, int remaining) {
+	private Boolean allowanceValidator (OperationMode mode, Map<LocalDate, OffMode> yearMap, LocalDate start, LocalDate end, int remaining) {
 
 		if (mode == OperationMode.CANCEL) {
 			return true;
@@ -121,7 +129,7 @@ public class Modifier {
 			}
 	}
 
-	private static int calcEstimatedOffLength(Map<LocalDate, OffMode> yearMap, LocalDate start, LocalDate end) {
+	private int calcEstimatedOffLength(Map<LocalDate, OffMode> yearMap, LocalDate start, LocalDate end) {
 
 		int estimated=0;
 		LocalDate day = start;
@@ -140,9 +148,9 @@ public class Modifier {
 		return estimated;
 	}
 
-	private static Boolean multipleValidator (Boolean validAllowance, Boolean validDate, Boolean errorTrigger){
+	private static Boolean multipleValidator (Boolean validAllowance, Boolean validDate){
 
-		if (validAllowance && validDate && !errorTrigger) {
+		if (validAllowance && validDate) {
 			return true;
 		} else {
 			return false;
