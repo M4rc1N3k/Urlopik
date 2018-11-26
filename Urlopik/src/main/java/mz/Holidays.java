@@ -5,10 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Holidays {
-	
 
-	
-	public static List<LocalDate> holidaysList (String year){
+	private List<LocalDate> holidaysList;
+
+	public Holidays(String year){
+		this.holidaysList = generateHolidaysList(year);
+	}
+
+	public List<LocalDate> getHolidaysList() {
+		return this.holidaysList;
+	}
+
+	private List<LocalDate> generateHolidaysList(String year){
 		
 		List<LocalDate> holidaysList = new ArrayList<>();
 		
@@ -36,7 +44,7 @@ public class Holidays {
 		return holidaysList;
 	}
 	
-	private static LocalDate easterCalculator (int year) {
+	private LocalDate easterCalculator (int year) {
 		
 		int a,b,c,h,l,m,n,day,month;
 		String easterSt;

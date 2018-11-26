@@ -6,8 +6,18 @@ import java.util.List;
 import java.util.Map;
 
 public class Printer {
-		
-	public static List<String[]> offPeriodsDisplay (Map<LocalDate, OffMode> yearMap) {
+
+	private List<String[]> offPeriodsJuxtaposition;
+
+	public Printer (Map<LocalDate, OffMode> yearMap){
+		this.offPeriodsJuxtaposition = displayOffPeriods(yearMap);
+	}
+
+	public List<String[]> getOffPeriodsJuxtaposition() {
+		return this.offPeriodsJuxtaposition;
+	}
+
+	private List<String[]> displayOffPeriods(Map<LocalDate, OffMode> yearMap) {
 		
 		List<String[]> offPeriodsList = new ArrayList<>();
 		

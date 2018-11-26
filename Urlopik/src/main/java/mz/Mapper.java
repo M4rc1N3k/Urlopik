@@ -9,13 +9,13 @@ public class Mapper {
     private Map<LocalDate, OffMode> yearMap = new TreeMap<>();
 
 	public Mapper(String offBinary, int year) {
-		this.yearMap=generateMap(offBinary, year);
+		this.yearMap= generateYearMap(offBinary, year);
 	}
     public Map<LocalDate, OffMode> getYearMap() {
         return this.yearMap;
     }
 
-	private Map<LocalDate, OffMode> generateMap(String offBinary, int year) {
+	private Map<LocalDate, OffMode> generateYearMap(String offBinary, int year) {
 		int a = offBinary.length();
 		char array[] = offBinary.toCharArray();
 		List<Integer> listInt = new ArrayList<Integer>();
@@ -30,7 +30,8 @@ public class Mapper {
 		int leapYearAppendix = isLeapYear(year) ? 1 : 0;
 		int yearLength = 365 + leapYearAppendix;
 
-		List<LocalDate> holidaysList = Holidays.holidaysList(String.valueOf(year));
+		List<LocalDate> holidaysList = new Holidays(String.valueOf(year)).getHolidaysList();
+
 
 		LocalDate date = LocalDate.parse(String.valueOf(year + "-01-01"));
 

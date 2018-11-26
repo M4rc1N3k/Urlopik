@@ -7,6 +7,7 @@ import org.apache.commons.lang.math.NumberUtils;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -31,6 +32,8 @@ public class Main {
 
         Map<LocalDate, OffMode> curYearMap = new Mapper(offBinary, curYear).getYearMap();
 
+        List<String[]> curOffPeriodsJuxtaposition;
+
         Counter curCount = new Counter(curYearMap, totalOffCount);
         int plannedOffCount = curCount.calcPlanned();
         int usedOffCount = curCount.calcPlanned();
@@ -48,7 +51,8 @@ public class Main {
                 remainingOffCount = curCount.calcRemaining();
 
                 System.out.println("\nTwoje obecnie zaplanowane okresy urlopu to:");
-                Printer.offPeriodsDisplay(curYearMap);
+
+                curOffPeriodsJuxtaposition  = new Printer(curYearMap).getOffPeriodsJuxtaposition();
 
                 System.out.println();
                 summary(totalOffCount, plannedOffCount, usedOffCount, remainingOffCount );
