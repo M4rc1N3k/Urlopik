@@ -1,4 +1,4 @@
-//package test.java;
+package mz;//package test.java;
 
 import org.junit.*;
 
@@ -60,7 +60,7 @@ public class HolidaysTest {
 
         Method ec = null;
         try {
-            ec = Holidays.class.getDeclaredMethod("easterCalculator", int.class);
+            ec = mz.Holidays.class.getDeclaredMethod("easterCalculator", int.class);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
