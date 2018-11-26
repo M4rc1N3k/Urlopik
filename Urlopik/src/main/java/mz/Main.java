@@ -42,7 +42,7 @@ public class Main {
         System.out.println("©2018 by MZ\n");
 
         do {
-                IllegalArgumentException argumentException = new IllegalArgumentException();
+                //IllegalArgumentException argumentException = ;
 
                 curCount = new Counter(curYearMap, totalOffCount);
                 plannedOffCount = curCount.calcPlanned();
@@ -55,16 +55,18 @@ public class Main {
                 System.out.println();
                 summary(totalOffCount, plannedOffCount, usedOffCount, remainingOffCount );
 
-                while(true) {
-                try {
+            while(true) {
+
                     System.out.println("\nCo chciałbyś zrobić?");
                     System.out.println("\t1) dopisać urlop");
                     System.out.println("\t2) anulować urlop");
                     System.out.println("\t3) zakończyć program");
 
                     String readMode = sc.next();
-                    if (!NumberUtils.isNumber(readMode)) throw argumentException;
-                    if (Integer.parseInt(readMode) / 4 != 0) throw argumentException;
+                    
+                try {
+                    if (!NumberUtils.isNumber(readMode)) throw new IllegalArgumentException();
+                    if (Integer.parseInt(readMode) / 4 != 0) throw new IllegalArgumentException();
                     mode = OperationMode.fromInt(Integer.parseInt(readMode));
 
 
