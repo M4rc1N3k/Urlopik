@@ -4,8 +4,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import org.apache.commons.lang.math.NumberUtils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -45,26 +44,26 @@ public class Main {
         System.out.println("©2018 by MZ\n");
 
         do {
-                curCount = new Counter(curYearMap, totalOffCount);
-                plannedOffCount = curCount.calcPlanned();
-                usedOffCount = curCount.calcUsed();
-                remainingOffCount = curCount.calcRemaining();
+            curCount = new Counter(curYearMap, totalOffCount);
+            plannedOffCount = curCount.calcPlanned();
+            usedOffCount = curCount.calcUsed();
+            remainingOffCount = curCount.calcRemaining();
 
-                System.out.println("\nTwoje obecnie zaplanowane okresy urlopu to:");
+            System.out.println("\nTwoje obecnie zaplanowane okresy urlopu to:");
 
-                curOffPeriodsJuxtaposition  = new Printer(curYearMap).getOffPeriodsJuxtaposition();
+            curOffPeriodsJuxtaposition = new Printer(curYearMap).getOffPeriodsJuxtaposition();
 
-                System.out.println();
-                summary(totalOffCount, plannedOffCount, usedOffCount, remainingOffCount );
+            System.out.println();
+            summary(totalOffCount, plannedOffCount, usedOffCount, remainingOffCount);
 
-            while(true) {
+            while (true) {
 
-                    System.out.println("\nCo chciałbyś zrobić?");
-                    System.out.println("\t1) dopisać urlop");
-                    System.out.println("\t2) anulować urlop");
-                    System.out.println("\t3) zakończyć program");
+                System.out.println("\nCo chciałbyś zrobić?");
+                System.out.println("\t1) dopisać urlop");
+                System.out.println("\t2) anulować urlop");
+                System.out.println("\t3) zakończyć program");
 
-                    String readMode = sc.next();
+                String readMode = sc.next();
 
                 try {
                     if (!NumberUtils.isNumber(readMode)) throw new IllegalArgumentException();
@@ -73,10 +72,20 @@ public class Main {
 
 
                     if (mode == OperationMode.SET || mode == OperationMode.CANCEL) {
+
                         curYearMap = new Modifier(mode, remainingOffCount, plannedOffCount, curYearMap).getModifiedYearMap();
-                        //TODO: saving map to the output file
                         break;
-                    } else if (mode == OperationMode.EXIT) {
+                    }
+                    else if (mode == OperationMode.EXIT) {
+
+                        offBinary = new Demapper(curYearMap).getOutputString();
+
+                        try {
+                            saveToFile(file, offBinary);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                         System.out.println("Do widzenia!");
                         break;
                     }
@@ -103,4 +112,9 @@ public class Main {
         System.out.println("\t-pozostało " + remaining + " dni");
     }
 
+    static void saveToFile(File file, String outputString) throws IOException {
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8"))) {
+            writer.write(outputString);
+        }
+    }
 }
