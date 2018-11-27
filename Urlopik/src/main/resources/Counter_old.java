@@ -3,30 +3,18 @@ package mz;
 import java.time.LocalDate;
 import java.util.Map;
 
-public class Counter {
+public class Counter_old {
 
     private Map<LocalDate, OffMode> yearMap;
     private int total, planned, remaining, used;
 
 
-    public Counter(Map<LocalDate, OffMode> yearMap, int total) {
+    public Counter_old(Map<LocalDate, OffMode> yearMap, int total) {
         this.yearMap = yearMap;
         this.total = total;
         this.planned = calcPlanned();
         this.remaining = calcRemaining();
         this.used = calcUsed();
-    }
-
-    public int getPlanned() {
-        return this.planned;
-    }
-
-    public int getRemaining() {
-        return this.remaining;
-    }
-
-    public int getUsed() {
-        return this.used;
     }
 
     LocalDate today() {
@@ -38,13 +26,13 @@ public class Counter {
     }
 
 
-    private int calcPlanned() {
+    public int calcPlanned() {
 
         int planned = 0;
-        LocalDate day = today().plusDays(1);
+        LocalDate day = today();
 
-        int iterator = todayDayNumber()+1;
-        while (iterator <= yearMap.size()) {
+        int iterator = todayDayNumber();
+        while (iterator < yearMap.size()) {
 
             if (yearMap.get(day) == OffMode.OFF) {
                 planned++;
@@ -57,7 +45,7 @@ public class Counter {
         return planned;
     }
 
-    private int calcUsed() {
+    public int calcUsed() {
         LocalDate today = today();
         int todayNumber = todayDayNumber();
         int used = 0;
@@ -75,7 +63,7 @@ public class Counter {
         return used;
     }
 
-    private int calcRemaining() {
+    public int calcRemaining() {
         int remaining = total - calcUsed() - calcPlanned();
 
         return remaining;

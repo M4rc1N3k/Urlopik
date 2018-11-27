@@ -17,26 +17,18 @@ public class Main {
         int curYear = LocalDate.now().getYear();
         int nextYear = LocalDate.now().getYear() + 1;
 
-        File file = new File("off_forCancel.txt");
-        String offBinary = null;
-        try {
-            offBinary = Files.asCharSource(file, Charsets.UTF_8).read();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
+        File file = new File("off.txt");
+        String offBinary = readFromFile(file);
+
+        Counter curCount;
+        int plannedOffCount;
+        int usedOffCount;
+        int remainingOffCount;
         int totalOffCount = 90;
 
-        OperationMode mode = OperationMode.DEFAULT;
+        OperationMode mode;
 
         Map<LocalDate, OffMode> curYearMap = new Mapper(offBinary, curYear).getYearMap();
-
-        List<String[]> curOffPeriodsJuxtaposition;
-
-        Counter curCount = new Counter(curYearMap, totalOffCount);
-        int plannedOffCount = curCount.calcPlanned();
-        int usedOffCount = curCount.calcPlanned();
-        int remainingOffCount = curCount.calcRemaining();
 
         Scanner sc = new Scanner(System.in);
 
@@ -45,13 +37,13 @@ public class Main {
 
         do {
             curCount = new Counter(curYearMap, totalOffCount);
-            plannedOffCount = curCount.calcPlanned();
-            usedOffCount = curCount.calcUsed();
-            remainingOffCount = curCount.calcRemaining();
+            plannedOffCount = curCount.getPlanned();
+            usedOffCount = curCount.getUsed();
+            remainingOffCount = curCount.getRemaining();
 
             System.out.println("\nTwoje obecnie zaplanowane okresy urlopu to:");
 
-            curOffPeriodsJuxtaposition = new Printer(curYearMap).getOffPeriodsJuxtaposition();
+            System.out.println(new Printer(curYearMap).getOffPeriodsJuxtaposition());
 
             System.out.println();
             summary(totalOffCount, plannedOffCount, usedOffCount, remainingOffCount);
@@ -103,6 +95,18 @@ public class Main {
 
         sc.close();
 
+    }
+
+    private static String readFromFile(File file) {
+        String offBinary = null;
+
+        try {
+            offBinary = Files.asCharSource(file, Charsets.UTF_8).read();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return offBinary;
     }
 
     static void summary(int total, int planed, int used, int remaining) {

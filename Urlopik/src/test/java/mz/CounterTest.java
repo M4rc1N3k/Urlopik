@@ -27,7 +27,7 @@ public class CounterTest {
         Mockito.when(counter.todayDayNumber()).thenReturn(2);
 
         //when
-        int result = counter.calcPlanned();
+        int result = counter.getPlanned();
 
         //then
         MatcherAssert.assertThat(result, equalTo(1));
@@ -47,7 +47,7 @@ public class CounterTest {
         Mockito.when(counter.today()).thenReturn(LocalDate.of(2001, 01, 02));
 
         //when
-        int result = counter.calcUsed();
+        int result = counter.getUsed();
 
         //then
         MatcherAssert.assertThat(result, equalTo(2));
