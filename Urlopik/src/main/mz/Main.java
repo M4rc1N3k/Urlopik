@@ -25,7 +25,8 @@ public class Main {
 
         OperationMode mode;
 
-        Map<LocalDate, OffMode> curYearMap = new Mapper(offBinary, curYear).getYearMap();
+        IMapper mapper = new Mapper(offBinary,curYear);
+        Map<LocalDate, OffMode> curYearMap = mapper.getYearMap();
 
         Scanner sc = new Scanner(System.in);
 
@@ -67,7 +68,8 @@ public class Main {
                     }
                     else if (mode == OperationMode.EXIT) {
 
-                        offBinary = new Demapper(curYearMap).getOutputString();
+                        ISerializer serializer = new Demapper(curYearMap);
+                        offBinary = serializer.serialize();
 
                         try {
                             saveToFile(file, offBinary);

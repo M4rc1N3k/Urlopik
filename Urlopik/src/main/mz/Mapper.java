@@ -2,7 +2,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 
-public class Mapper {
+public class Mapper implements IMapper {
 
     private Map<LocalDate, OffMode> yearMap = new TreeMap<>();
 

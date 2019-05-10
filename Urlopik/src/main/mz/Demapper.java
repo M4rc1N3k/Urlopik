@@ -1,7 +1,7 @@
 import java.time.LocalDate;
 import java.util.Map;
 
-public class Demapper {
+public class Demapper implements ISerializer {
 
     private String outputString;
 
@@ -9,7 +9,7 @@ public class Demapper {
         this.outputString = decomposeYearMap(yearMap);
     }
 
-    public String getOutputString() {
+    public String serialize() {
         return this.outputString;
     }
 
