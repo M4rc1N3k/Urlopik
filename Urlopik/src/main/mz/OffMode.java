@@ -1,4 +1,4 @@
-package mz;
+package main.mz;
 
 public enum OffMode {
 

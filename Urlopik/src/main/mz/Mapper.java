@@ -1,4 +1,4 @@
-package mz;
+package main.mz;
 
 import java.time.LocalDate;
 import java.util.*;

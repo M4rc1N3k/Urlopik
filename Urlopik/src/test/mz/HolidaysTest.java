@@ -1,5 +1,6 @@
-package mz;//package test.java;
+package test.mz;//package test.java;
 
+import main.mz.Holidays;
 import org.junit.*;
 
 import java.io.FileNotFoundException;
@@ -60,7 +61,7 @@ public class HolidaysTest {
 
         Method ec = null;
         try {
-            ec = mz.Holidays.class.getDeclaredMethod("easterCalculator", int.class);
+            ec = Holidays.class.getDeclaredMethod("easterCalculator", int.class);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }

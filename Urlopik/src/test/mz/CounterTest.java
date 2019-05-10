@@ -1,4 +1,4 @@
-package mz;
+package test.mz;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;

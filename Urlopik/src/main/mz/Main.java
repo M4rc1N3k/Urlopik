@@ -1,4 +1,4 @@
-package mz;
+package main.mz;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;

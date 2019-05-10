@@ -1,7 +1,8 @@
-package mz;
+package test.mz;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
+import main.mz.Modifier;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -78,7 +79,7 @@ public class ModifierValidatorsTest {
 
         Method av = null;
         try {
-            av = mz.Modifier.class.getDeclaredMethod("allowanceValidator", OperationMode.class, Map.class, LocalDate.class, LocalDate.class, int.class);
+            av = Modifier.class.getDeclaredMethod("allowanceValidator", OperationMode.class, Map.class, LocalDate.class, LocalDate.class, int.class);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -93,7 +94,7 @@ public class ModifierValidatorsTest {
         Method dv = null;
 
         try {
-            dv = mz.Modifier.class.getDeclaredMethod("dateValidator", LocalDate.class, LocalDate.class);
+            dv = Modifier.class.getDeclaredMethod("dateValidator", LocalDate.class, LocalDate.class);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
