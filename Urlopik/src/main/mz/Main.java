@@ -69,7 +69,7 @@ public class Main {
                     else if (mode == OperationMode.EXIT) {
 
                         ISerializer serializer = new Demapper(curYearMap);
-                        offBinary = serializer.serialize();
+                        offBinary = serializer.serialize(curYearMap);
 
                         try {
                             saveToFile(file, offBinary);

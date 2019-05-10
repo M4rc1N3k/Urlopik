@@ -6,13 +6,13 @@ public class Demapper implements ISerializer {
     private String outputString;
 
     public Demapper(Map<LocalDate,OffMode> yearMap){
-        this.outputString = decomposeYearMap(yearMap);
+        this.outputString = serialize(yearMap);
     }
 
-    public String serialize() {
-        return this.outputString;
+    @Override
+    public String serialize(Map<LocalDate, OffMode> yearMap) {
+        return decomposeYearMap(yearMap);
     }
-
 
     private String decomposeYearMap(Map<LocalDate, OffMode> yearMap){
 
@@ -47,7 +47,6 @@ public class Demapper implements ISerializer {
 
         return outputString;
     }
-
 
 }
 

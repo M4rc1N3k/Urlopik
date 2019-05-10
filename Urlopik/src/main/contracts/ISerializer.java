@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.util.Map;
+
 public interface ISerializer {
-    String serialize();
+    String serialize(Map<LocalDate, OffMode> yearMap);
 }
