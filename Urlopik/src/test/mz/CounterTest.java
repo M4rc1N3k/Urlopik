@@ -1,5 +1,3 @@
-package test.mz;
-
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.mockito.Mockito;

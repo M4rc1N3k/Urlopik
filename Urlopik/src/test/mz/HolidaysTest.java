@@ -1,7 +1,6 @@
-package test.mz;//package test.java;
-
-import main.mz.Holidays;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

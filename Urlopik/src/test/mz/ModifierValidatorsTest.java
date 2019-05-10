@@ -1,8 +1,5 @@
-package test.mz;
-
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
-import main.mz.Modifier;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +11,7 @@ import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class ModifierValidatorsTest {
 

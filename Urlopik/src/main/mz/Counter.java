@@ -1,11 +1,9 @@
-package main.mz;
-
 import java.time.LocalDate;
 import java.util.Map;
 
 public class Counter {
 
-    private Map<LocalDate, main.mz.OffMode> yearMap;
+    private Map<LocalDate, OffMode> yearMap;
     private int total, planned, remaining, used;
 
 

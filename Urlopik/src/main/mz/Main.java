@@ -1,12 +1,9 @@
-package main.mz;
-
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import org.apache.commons.lang.math.NumberUtils;
 
 import java.io.*;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
