@@ -4,18 +4,21 @@ import java.util.*;
 
 public class Mapper implements IMapper {
 
-    private Map<LocalDate, OffMode> yearMap = new TreeMap<>();
+	private String offBinary;
+	private int year;
 
 	public Mapper(String offBinary, int year) {
-		this.yearMap= generateYearMap(offBinary, year);
+		this.offBinary = offBinary;
+		this.year = year;
 	}
     public Map<LocalDate, OffMode> getYearMap() {
-        return this.yearMap;
+        return generateYearMap(offBinary, year);
     }
 
 	private Map<LocalDate, OffMode> generateYearMap(String offBinary, int year) {
 		int a = offBinary.length();
 		char array[] = offBinary.toCharArray();
+		Map<LocalDate,OffMode> yearMap = new TreeMap<>(	);
 		List<Integer> listInt = new ArrayList<Integer>();
 
 

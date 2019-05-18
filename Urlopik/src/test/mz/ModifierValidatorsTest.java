@@ -39,7 +39,7 @@ public class ModifierValidatorsTest {
         }catch (IOException e){
             System.exit(1);
         }
-        curYearMap = new Mapper(offBinary, year).getYearMap();
+        curYearMap = new Mapper().getYearMap(offBinary, year);
         modifier = new Modifier(mode, remaining, planned, curYearMap);
     }
 

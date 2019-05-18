@@ -1,20 +1,23 @@
+import java.io.*;
 import java.time.LocalDate;
 import java.util.Map;
 
 public class Demapper implements ISerializer {
 
-    private String outputString;
+    private Map<LocalDate,OffMode> yearMap;
+    private File file;
 
-    public Demapper(Map<LocalDate,OffMode> yearMap){
-        this.outputString = serialize(yearMap);
+    public Demapper(Map<LocalDate,OffMode> yearMap, File file){
+        this.yearMap = yearMap;
+        this.file = file;
     }
 
     @Override
-    public String serialize(Map<LocalDate, OffMode> yearMap) {
-        return decomposeYearMap(yearMap);
+    public void serialize(Map<LocalDate, OffMode> yearMap, File file) {
+        decomposeYearMap(yearMap, file);
     }
 
-    private String decomposeYearMap(Map<LocalDate, OffMode> yearMap){
+    private void decomposeYearMap(Map<LocalDate, OffMode> yearMap, File file){
 
         int iterationNumber, symbolicValueToBeSaved;
         StringBuilder sb = new StringBuilder();
@@ -43,9 +46,20 @@ public class Demapper implements ISerializer {
             }
         }
 
-        outputString = sb.toString();
+        String outputString = sb.toString();
 
-        return outputString;
+        try {
+            saveToFile(file, outputString);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    static void saveToFile(File file, String outputString) throws IOException {
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8"))) {
+            writer.write(outputString);
+        }
     }
 
 }

@@ -68,14 +68,8 @@ public class Main {
                     }
                     else if (mode == OperationMode.EXIT) {
 
-                        ISerializer serializer = new Demapper(curYearMap);
-                        offBinary = serializer.serialize(curYearMap);
-
-                        try {
-                            saveToFile(file, offBinary);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        ISerializer serializer = new Serializer();
+                        serializer.serialize(curYearMap, file);
 
                         System.out.println("Do widzenia!");
                         break;
@@ -115,9 +109,5 @@ public class Main {
         System.out.println("\t-pozostało " + remaining + " dni");
     }
 
-    static void saveToFile(File file, String outputString) throws IOException {
-        try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8"))) {
-            writer.write(outputString);
-        }
-    }
+
 }
