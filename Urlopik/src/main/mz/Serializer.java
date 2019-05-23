@@ -11,7 +11,7 @@ public class Serializer implements ISerializer {
     public void serialize(Map<LocalDate, OffMode> yearMap, File file) {
         ObjectMapper objectMapper = new ObjectMapper(   );
         try {
-            objectMapper.writeValue(file, yearMap);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, yearMap);
             //consider string output later turn to JSON
         } catch (IOException e) {
             e.printStackTrace();
