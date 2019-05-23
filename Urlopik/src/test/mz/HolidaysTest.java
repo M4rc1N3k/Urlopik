@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -20,7 +19,6 @@ public class HolidaysTest {
     @Before
     public void setUp(){
         verificationFileScanner=null;
-        ec = easterCalcReflector();
         String dir = new StringBuilder().append("src//test//resources//easter.txt").toString();
 
         try {
@@ -41,32 +39,13 @@ public class HolidaysTest {
         for (int i = 2001; i <= 2100; i++){
 
             LocalDate tabbedDate, calcDate=null;
+            Holidays holidays = new Holidays(i);
 
             tabbedDate = LocalDate.parse(verificationFileScanner.nextLine());
 
-            try {
-                calcDate = (LocalDate)ec.invoke(null,i);
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
+            calcDate = holidays.easterCalculator();
 
             assertTrue(tabbedDate.isEqual(calcDate));
-
         }
-    }
-
-
-    public Method easterCalcReflector(){
-
-        Method ec = null;
-        try {
-            ec = Holidays.class.getDeclaredMethod("easterCalculator", int.class);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        ec.setAccessible(true);
-
-        return ec;
-
     }
 }
