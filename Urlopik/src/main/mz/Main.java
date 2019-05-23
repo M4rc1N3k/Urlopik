@@ -14,7 +14,7 @@ public class Main {
         int curYear = LocalDate.now().getYear();
         int nextYear = LocalDate.now().getYear() + 1;
 
-        File file = new File("off.txt");
+        File file = new File("off.json");
         String offBinary = readFromFile(file);
 
         Counter curCount;
@@ -25,7 +25,7 @@ public class Main {
 
         OperationMode mode;
 
-        IMapper mapper = new Mapper(offBinary,curYear);
+        IMapper mapper = new Deserializer(offBinary,curYear);
         Map<LocalDate, OffMode> curYearMap = mapper.getYearMap();
 
         Scanner sc = new Scanner(System.in);

@@ -76,4 +76,12 @@ public class Holidays {
 		
 		return easter;
 	}
+
+	public boolean isOnList(LocalDate date){
+		if (holidaysList.contains(date))
+		{
+			return true;
+		}
+		return false;
+	}
 }
