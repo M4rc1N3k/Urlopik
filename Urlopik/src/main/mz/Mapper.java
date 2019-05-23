@@ -31,7 +31,7 @@ public class Mapper implements IMapper {
 		int leapYearAppendix = isLeapYear(year) ? 1 : 0;
 		int yearLength = 365 + leapYearAppendix;
 
-		List<LocalDate> holidaysList = new Holidays(String.valueOf(year)).getHolidaysList();
+		List<LocalDate> holidaysList = new Holidays(year).getHolidaysList();
 
 
 		LocalDate date = LocalDate.parse(String.valueOf(year + "-01-01"));

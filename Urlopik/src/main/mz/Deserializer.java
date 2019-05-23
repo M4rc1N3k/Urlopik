@@ -36,7 +36,7 @@ public class Deserializer implements IMapper {
     private Map<LocalDate, OffMode> stringMapToProperMap(Map<String,String> stringMap)
     {
         Map<LocalDate, OffMode> properMap = new TreeMap<>();
-        Holidays holidays = new Holidays(String.valueOf(year));
+        Holidays holidays = new Holidays(year);
 
         for (Map.Entry<String, String> entry : stringMap.entrySet()) {
             LocalDate date = LocalDate.parse(entry.getKey());

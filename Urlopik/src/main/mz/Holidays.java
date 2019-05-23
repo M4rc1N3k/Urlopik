@@ -5,33 +5,36 @@ import java.util.List;
 public class Holidays {
 
 	private List<LocalDate> holidaysList;
+	private int year;
 
-	public Holidays(String year){
-		this.holidaysList = generateHolidaysList(year);
+	public Holidays(int year){
+		this.year = year;
+		this.holidaysList = generateHolidaysList();
 	}
 
 	public List<LocalDate> getHolidaysList() {
-		return this.holidaysList;
+		return generateHolidaysList();
 	}
 
-	private List<LocalDate> generateHolidaysList(String year){
+	private List<LocalDate> generateHolidaysList(){
 		
 		List<LocalDate> holidaysList = new ArrayList<>();
+		String yearString = String.valueOf(year);
 		
-		holidaysList.add(LocalDate.parse(year+"-01-01"));		//New Year
-		holidaysList.add(LocalDate.parse(year+"-01-06"));		//Epiphany (Three Kings' Day)
-		holidaysList.add(LocalDate.parse(year+"-05-01"));		//Labour Day
-		holidaysList.add(LocalDate.parse(year+"-05-03"));		//Constitution Day
-		holidaysList.add(LocalDate.parse(year+"-08-15"));		//Armed Forces Day
-		holidaysList.add(LocalDate.parse(year+"-11-01"));		//All Saints' Day
-		holidaysList.add(LocalDate.parse(year+"-11-11"));		//Independence Day
-		holidaysList.add(LocalDate.parse(year+"-12-25"));		//Christmas
-		holidaysList.add(LocalDate.parse(year+"-12-26"));		//Christmas (2nd day)
+		holidaysList.add(LocalDate.parse(yearString+"-01-01"));		//New Year
+		holidaysList.add(LocalDate.parse(yearString+"-01-06"));		//Epiphany (Three Kings' Day)
+		holidaysList.add(LocalDate.parse(yearString+"-05-01"));		//Labour Day
+		holidaysList.add(LocalDate.parse(yearString+"-05-03"));		//Constitution Day
+		holidaysList.add(LocalDate.parse(yearString+"-08-15"));		//Armed Forces Day
+		holidaysList.add(LocalDate.parse(yearString+"-11-01"));		//All Saints' Day
+		holidaysList.add(LocalDate.parse(yearString+"-11-11"));		//Independence Day
+		holidaysList.add(LocalDate.parse(yearString+"-12-25"));		//Christmas
+		holidaysList.add(LocalDate.parse(yearString+"-12-26"));		//Christmas (2nd day)
 		
 		
 		LocalDate easter;
 
-		easter = easterCalculator(Integer.parseInt(year));
+		easter = easterCalculator();
 		
 		holidaysList.add(easter);								//Easter
 		holidaysList.add(easter.plusDays(1));					//Easter Monday
@@ -42,7 +45,7 @@ public class Holidays {
 		return holidaysList;
 	}
 	
-	private LocalDate easterCalculator (int year) {
+	public LocalDate easterCalculator () {
 		
 		int a,b,c,h,l,m,n,day,month;
 		String easterSt;
