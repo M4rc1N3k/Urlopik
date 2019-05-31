@@ -71,6 +71,9 @@ public class Main {
                         ISerializer serializer = new Serializer();
                         serializer.serialize(curYearMap, file);
 
+                        ISerializer csvCreator = new CsvCreator();
+                        csvCreator.serialize(curYearMap, new File("off.csv"));
+
                         System.out.println("Do widzenia!");
                         break;
                     }

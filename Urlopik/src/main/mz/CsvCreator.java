@@ -35,8 +35,8 @@ public class CsvCreator implements ISerializer {
         int dayValue = date.getDayOfMonth();
         int yearValue = date.getYear();
 
-        String month = monthValue>10 ? String.valueOf(monthValue) : "0"+String.valueOf(monthValue);
-        String day = dayValue>10 ? String.valueOf(dayValue) : "0"+String.valueOf(dayValue);
+        String month = monthValue>=10 ? String.valueOf(monthValue) : "0"+String.valueOf(monthValue);
+        String day = dayValue>=10 ? String.valueOf(dayValue) : "0"+String.valueOf(dayValue);
         String year = String.valueOf(yearValue);
 
         return month+"/"+day+"/"+year;
