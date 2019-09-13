@@ -13,6 +13,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/utils" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/processors.domain" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/enums" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/entities.domain" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
