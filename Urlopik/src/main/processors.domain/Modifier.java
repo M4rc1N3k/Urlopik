@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 
-public class Modifier {
+public class Modifier implements IModifier {
 
 	private Map<LocalDate, OffMode> modifiedYearMap;
 

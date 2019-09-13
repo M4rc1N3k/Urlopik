@@ -1,12 +1,9 @@
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import static org.hamcrest.Matchers.equalTo;
 
 
 public class CounterTest {
