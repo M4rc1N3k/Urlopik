@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class CsvCreator implements ISerializer {
+public class CsvCreator implements ISerializer<File> {
     @Override
     public void serialize(Map<LocalDate, OffMode> yearMap, File file) {
         try {

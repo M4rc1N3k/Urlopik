@@ -2,7 +2,7 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.Map;
 
-public class Demapper implements ISerializer {
+public class Demapper implements ISerializer<File> {
 
     private Map<LocalDate,OffMode> yearMap;
     private File file;

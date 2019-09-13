@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Map;
 
-public class Serializer implements ISerializer {
+public class Serializer implements ISerializer<File> {
 
     @Override
     public void serialize(Map<LocalDate, OffMode> yearMap, File file) {
