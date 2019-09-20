@@ -61,10 +61,9 @@ public class Main {
                     if (Integer.parseInt(readMode) / 4 != 0) throw new IllegalArgumentException();
                     mode = OperationMode.fromInt(Integer.parseInt(readMode));
 
-
                     if (mode == OperationMode.SET || mode == OperationMode.CANCEL) {
 
-                        curYearMap = new Modifier(mode, remainingOffCount, plannedOffCount, curYearMap).getModifiedYearMap();
+                        map = new Modifier(mode, remainingOffCount, plannedOffCount, map).getModifiedMap();
                         break;
                     }
                     else if (mode == OperationMode.EXIT) {

@@ -9,12 +9,13 @@ public class Modifier implements IModifier {
 
 	private Map<LocalDate, OffMode> modifiedYearMap;
 
-	public Modifier(OperationMode mode, int remaining, int planned, Map<LocalDate, OffMode> yearMap) {
-		this.modifiedYearMap = changeOff(mode, remaining, planned, yearMap);
+	public Modifier(OperationMode mode, int remaining, int planned, IMap map) {
+		this.modifiedYearMap = changeOff(mode, remaining, planned, map.getMap());
 	}
 
-	public Map<LocalDate, OffMode> getModifiedYearMap() {
-		return this.modifiedYearMap;
+	public IMap getModifiedMap() {
+		IMap map = new OffMap(modifiedYearMap);
+		return map;
 	}
 
 	private Map<LocalDate, OffMode> changeOff (OperationMode mode, int remaining, int planned, Map<LocalDate, OffMode> yearMap) {
