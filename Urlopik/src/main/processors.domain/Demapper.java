@@ -13,8 +13,10 @@ public class Demapper implements ISerializer<File> {
     }
 
     @Override
-    public void serialize(Map<LocalDate, OffMode> yearMap, File file) {
+    public File serialize(IMap map, File file) {
+        Map<LocalDate,OffMode> yearMap = map.getMap();
         decomposeYearMap(yearMap, file);
+        return file;
     }
 
     private void decomposeYearMap(Map<LocalDate, OffMode> yearMap, File file){
@@ -61,6 +63,5 @@ public class Demapper implements ISerializer<File> {
             writer.write(outputString);
         }
     }
-
 }
 

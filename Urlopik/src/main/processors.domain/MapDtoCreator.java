@@ -5,8 +5,8 @@ import java.util.TreeMap;
 
 public class MapDtoCreator implements ISerializer<MapDto> {
     @Override
-    public void serialize(Map<LocalDate, OffMode> yearMap, MapDto resultObject) {
-
+    public MapDto serialize(IMap map, MapDto resultObject) {
+        Map<LocalDate,OffMode> yearMap = map.getMap();
         resultObject.yearMapDto = new TreeMap<>();
 
         for (Map.Entry<LocalDate,OffMode> record: yearMap.entrySet())
@@ -15,5 +15,6 @@ public class MapDtoCreator implements ISerializer<MapDto> {
                     record.getKey().toString(),
                     record.getValue().toString());
         }
+        return resultObject;
     }
 }

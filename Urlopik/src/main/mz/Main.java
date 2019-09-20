@@ -69,13 +69,13 @@ public class Main {
                     else if (mode == OperationMode.EXIT) {
 
                         ISerializer serializer = new Serializer();
-                        serializer.serialize(curYearMap, file);
+                        serializer.serialize(map, file);
 
                         ISerializer csvCreator = new CsvCreator();
-                        csvCreator.serialize(curYearMap, new File("off.csv"));
+                        csvCreator.serialize(map, new File("off.csv"));
 
                         ISerializer mapDtoCreator = new MapDtoCreator();
-                        mapDtoCreator.serialize(curYearMap,new MapDto());
+                        mapDtoCreator.serialize(map,new MapDto());
 
                         System.out.println("Do widzenia!");
                         break;

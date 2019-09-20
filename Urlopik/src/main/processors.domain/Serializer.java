@@ -8,13 +8,17 @@ import java.util.Map;
 public class Serializer implements ISerializer<File> {
 
     @Override
-    public void serialize(Map<LocalDate, OffMode> yearMap, File file) {
-        ObjectMapper objectMapper = new ObjectMapper(   );
+    public File serialize(IMap map, File file) {
+        Map<LocalDate,OffMode> yearMap = map.getMap();
+        ObjectMapper objectMapper = new ObjectMapper();
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, yearMap);
             //consider string output later turn to JSON
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        finally {
+            return file;
         }
     }
 }
