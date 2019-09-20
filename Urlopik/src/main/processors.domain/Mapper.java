@@ -11,9 +11,9 @@ public class Mapper implements IMapper {
 		this.offBinary = offBinary;
 		this.year = year;
 	}
-    public Map<LocalDate, OffMode> getYearMap() {
-        return generateYearMap(offBinary, year);
-    }
+    public IMap getYearMap() {
+		return new OffMap(generateYearMap(offBinary,year));
+	}
 
 	private Map<LocalDate, OffMode> generateYearMap(String offBinary, int year) {
 		int a = offBinary.length();

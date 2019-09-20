@@ -17,8 +17,8 @@ public class Deserializer implements IMapper {
     }
 
     @Override
-    public Map<LocalDate, OffMode> getYearMap() {
-        return generateYearMap(offBinary,year);
+    public IMap getYearMap() {
+        return new OffMap(generateYearMap(offBinary,year));
     }
 
     public Map<LocalDate, OffMode> generateYearMap(String offBinary, int year) {

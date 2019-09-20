@@ -26,7 +26,8 @@ public class Main {
         OperationMode mode;
 
         IMapper mapper = new Deserializer(offBinary,curYear);
-        Map<LocalDate, OffMode> curYearMap = mapper.getYearMap();
+        IMap map = mapper.getYearMap();
+        Map<LocalDate, OffMode> curYearMap = map.getMap();
 
         Scanner sc = new Scanner(System.in);
 
