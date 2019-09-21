@@ -18,7 +18,7 @@ public class Mapper implements IMapper {
 	private Map<LocalDate, OffMode> generateYearMap(String offBinary, int year) {
 		int a = offBinary.length();
 		char array[] = offBinary.toCharArray();
-		Map<LocalDate,OffMode> yearMap = new TreeMap<>(	);
+		Map<LocalDate, OffMode> yearMap = new TreeMap<>(	);
 		List<Integer> listInt = new ArrayList<Integer>();
 
 

@@ -1,5 +1,4 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -9,7 +8,7 @@ public class Serializer implements ISerializer<File> {
 
     @Override
     public File serialize(IMap map, File file) {
-        Map<LocalDate,OffMode> yearMap = map.getMap();
+        Map<LocalDate, OffMode> yearMap = map.getMap();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, yearMap);

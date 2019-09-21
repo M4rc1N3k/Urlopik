@@ -4,19 +4,23 @@
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src/main/processors.contracts" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/mz" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/mz" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/utils" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/utils" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/processors.domain" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/enums" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/entities.dto" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/processors.tests" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/entities.contracts" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/entities.domain" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/mz" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/test/mz" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/test/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/utils" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/utils" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/enums" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/entities" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/processors" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/processors" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/entities/contracts" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/entities/domain" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/entities/dto" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/processors/contracts" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/processors/domain" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

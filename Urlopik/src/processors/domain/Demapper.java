@@ -4,17 +4,17 @@ import java.util.Map;
 
 public class Demapper implements ISerializer<File> {
 
-    private Map<LocalDate,OffMode> yearMap;
+    private Map<LocalDate, OffMode> yearMap;
     private File file;
 
-    public Demapper(Map<LocalDate,OffMode> yearMap, File file){
+    public Demapper(Map<LocalDate, OffMode> yearMap, File file){
         this.yearMap = yearMap;
         this.file = file;
     }
 
     @Override
     public File serialize(IMap map, File file) {
-        Map<LocalDate,OffMode> yearMap = map.getMap();
+        Map<LocalDate, OffMode> yearMap = map.getMap();
         decomposeYearMap(yearMap, file);
         return file;
     }
@@ -28,13 +28,13 @@ public class Demapper implements ISerializer<File> {
             iterationNumber = entry.getDayOfYear();
 
             switch (yearMap.get(entry)){
-                case WORKING:
+                case OffMode.WORKING:
                     symbolicValueToBeSaved = 0;
                     break;
-                case OFF:
+                case OffMode.OFF:
                     symbolicValueToBeSaved = 1;
                     break;
-                case HOLIDAY:
+                case OffMode.HOLIDAY:
                     symbolicValueToBeSaved = 2;
                     break;
                 default:

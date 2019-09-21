@@ -1,10 +1,8 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import java.time.LocalDate;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 public class MapDtoCreatorTests {
