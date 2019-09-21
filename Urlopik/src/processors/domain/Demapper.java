@@ -28,13 +28,13 @@ public class Demapper implements ISerializer<File> {
             iterationNumber = entry.getDayOfYear();
 
             switch (yearMap.get(entry)){
-                case OffMode.WORKING:
+                case WORKING:
                     symbolicValueToBeSaved = 0;
                     break;
-                case OffMode.OFF:
+                case OFF:
                     symbolicValueToBeSaved = 1;
                     break;
-                case OffMode.HOLIDAY:
+                case HOLIDAY:
                     symbolicValueToBeSaved = 2;
                     break;
                 default:
