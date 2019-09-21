@@ -8,8 +8,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class CsvCreator implements ISerializer<File> {
+
     @Override
-    public void serialize(Map<LocalDate, OffMode> yearMap, File file) {
+    public File serialize(IMap map, File file) {
+
+        Map<LocalDate,OffMode> yearMap = map.getMap();
         try {
             CSVWriter csvWriter = new CSVWriter(new FileWriter(file));
 
@@ -27,6 +30,9 @@ public class CsvCreator implements ISerializer<File> {
             csvWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        finally {
+            return file;
         }
     }
 
