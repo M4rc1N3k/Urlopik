@@ -15,7 +15,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/processors" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test/processors" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/entities/contracts" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/entities/domain" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/entities/dto" isTestSource="false" />
