@@ -11,7 +11,7 @@ public class MapDtoCreatorTests {
 
     @Test
     public void shouldCreateEmptyMap(){
-        Map<LocalDate,OffMode> map = new TreeMap<>();
+        IMap map = new OffMap(new TreeMap<>());
         MapDto dto = new MapDto();
         MapDtoCreator creator = new MapDtoCreator();
 
@@ -21,11 +21,12 @@ public class MapDtoCreatorTests {
 
     @Test
     public void shouldCreateProperDto(){
-    Map<LocalDate,OffMode> map = new TreeMap<>();
-    map.put(LocalDate.parse("2019-09-12"),OffMode.WORKING);
-    map.put(LocalDate.parse("2019-09-13"),OffMode.OFF);
-    map.put(LocalDate.parse("2019-09-14"),OffMode.HOLIDAY);
-
+    Map<LocalDate,OffMode> yearMap = new TreeMap<>();
+    yearMap.put(LocalDate.parse("2019-09-12"),OffMode.WORKING);
+    yearMap.put(LocalDate.parse("2019-09-13"),OffMode.OFF);
+    yearMap.put(LocalDate.parse("2019-09-14"),OffMode.HOLIDAY);
+    IMap map = new OffMap(yearMap);
+    
     MapDto dto = new MapDto();
     MapDtoCreator creator = new MapDtoCreator();
 

@@ -29,7 +29,7 @@ public class ModifierValidatorsTest {
 
     //offBinary = Files.asCharSource(file, Charsets.UTF_8).read();
     Modifier modifier;
-    Map<LocalDate, OffMode> curYearMap;
+    IMap map;
     //Map<LocalDate, OffMode> curYearMap = Mapper.generateMap(Reader.dataFromFile("src//test//resources//off_clear.txt"), year);
 
     @Before
@@ -39,8 +39,8 @@ public class ModifierValidatorsTest {
         }catch (IOException e){
             System.exit(1);
         }
-        curYearMap = new Mapper(offBinary, year).getYearMap();
-        modifier = new Modifier(mode, remaining, planned, curYearMap);
+        map = new Mapper(offBinary, year).getYearMap();
+        modifier = new Modifier(mode, remaining, planned, map);
     }
 
     @After
@@ -60,7 +60,7 @@ public class ModifierValidatorsTest {
                 Boolean validDate = null;
 
                 try {
-                    validAllowance = (Boolean)av.invoke(modifier,mode,curYearMap,start,end,remaining);
+                    validAllowance = (Boolean)av.invoke(modifier,mode,map,start,end,remaining);
                     validDate = (Boolean)dv.invoke(modifier,start,end);
                 } catch (IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();
