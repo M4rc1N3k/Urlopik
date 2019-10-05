@@ -14,13 +14,13 @@ public class Modifier implements IModifier {
 	}
 
 	public IMap getModifiedMap() {
-		IMap map = new OffMap(modifiedYearMap);
+        var map = new OffMap(modifiedYearMap);
 		return map;
 	}
 
 	private Map<LocalDate, OffMode> changeOff (OperationMode mode, int remaining, int planned, Map<LocalDate, OffMode> yearMap) {
 
-		Scanner sc = new Scanner(System.in);
+        var sc = new Scanner(System.in);
 
 		LocalDate start=null, end=null;
 
@@ -52,7 +52,6 @@ public class Modifier implements IModifier {
 				System.out.print("Podaj koniec w formacie RRRR-MM-DD: ");
 				end = LocalDate.parse(sc.nextLine());
 
-
 				validD = dateValidator(start, end);
 
 				validA = allowanceValidator(mode, yearMap, start, end, remaining);
@@ -67,8 +66,8 @@ public class Modifier implements IModifier {
 		for (int i=0;i<=(start.until(end, ChronoUnit.DAYS));i++) {
 
 
-			LocalDate currentDay = start.plusDays(i);
-			OffMode currentDayStatus = yearMap.get(LocalDate.ofYearDay(currentDay.getYear(), currentDay.getDayOfYear()));
+            var currentDay = start.plusDays(i);
+            var currentDayStatus = yearMap.get(LocalDate.ofYearDay(currentDay.getYear(), currentDay.getDayOfYear()));
 
 			if(currentDayStatus == OffMode.WORKING && mode == OperationMode.SET) {
 				yearMap.put(currentDay, OffMode.OFF);
@@ -89,9 +88,7 @@ public class Modifier implements IModifier {
 //		sc.close();
 		return yearMap;
 	}
-	
-	
-	
+
 	private Boolean dateValidator (LocalDate st, LocalDate en) {
 		
 		if (st.until(en, ChronoUnit.DAYS)<0)
@@ -116,7 +113,7 @@ public class Modifier implements IModifier {
 		if (mode == OperationMode.CANCEL) {
 			return true;
 		} else
-			{int tempEstimated = calcEstimatedOffLength(yearMap, start, end);
+			{var tempEstimated = calcEstimatedOffLength(yearMap, start, end);
 
 			if (tempEstimated > remaining)
 				{System.out.println("Nie masz tylu dni do wykorzystania. \nPlanowałeś rozpisać ich "+tempEstimated+" a pozostało zaledwie "+remaining+".\n");
@@ -130,10 +127,10 @@ public class Modifier implements IModifier {
 
 	private int calcEstimatedOffLength(Map<LocalDate, OffMode> yearMap, LocalDate start, LocalDate end) {
 
-		int estimated=0;
+        var estimated=0;
 		LocalDate day = start;
 
-		int iterator = start.getDayOfYear();
+        var iterator = start.getDayOfYear();
 		while (iterator <= end.getDayOfYear()) {
 
 			if (yearMap.get(day) == OffMode.WORKING) {
@@ -154,7 +151,5 @@ public class Modifier implements IModifier {
 		} else {
 			return false;
 		}
-
 	}
-
 }

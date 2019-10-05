@@ -1,9 +1,9 @@
 import com.opencsv.CSVWriter;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Map;
 import java.util.Map.Entry;
 
 public class CsvCreator implements ISerializer<File> {
@@ -11,9 +11,9 @@ public class CsvCreator implements ISerializer<File> {
     @Override
     public File serialize(IMap map, File file) {
 
-        Map<LocalDate, OffMode> yearMap = map.getMap();
+        var yearMap = map.getMap();
         try {
-            CSVWriter csvWriter = new CSVWriter(new FileWriter(file));
+            var csvWriter = new CSVWriter(new FileWriter(file));
 
             String[] header = { "Subject", "Start Date", "All Day Event", "Start Time", "End Time", "Location", "Description"};
             csvWriter.writeNext(header);
@@ -36,13 +36,13 @@ public class CsvCreator implements ISerializer<File> {
     }
 
     public String parseGoogleCalendarDate(LocalDate date){
-        int monthValue = date.getMonthValue();
-        int dayValue = date.getDayOfMonth();
-        int yearValue = date.getYear();
+        var monthValue = date.getMonthValue();
+        var dayValue = date.getDayOfMonth();
+        var yearValue = date.getYear();
 
-        String month = monthValue>=10 ? String.valueOf(monthValue) : "0"+String.valueOf(monthValue);
-        String day = dayValue>=10 ? String.valueOf(dayValue) : "0"+String.valueOf(dayValue);
-        String year = String.valueOf(yearValue);
+        var month = monthValue>=10 ? String.valueOf(monthValue) : "0"+String.valueOf(monthValue);
+        var day = dayValue>=10 ? String.valueOf(dayValue) : "0"+String.valueOf(dayValue);
+        var year = String.valueOf(yearValue);
 
         return month+"/"+day+"/"+year;
     }

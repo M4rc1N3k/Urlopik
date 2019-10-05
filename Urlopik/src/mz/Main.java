@@ -2,20 +2,20 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import org.apache.commons.lang.math.NumberUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Map;
 import java.util.Scanner;
 
 
 public class Main {
     public static void main(String[] args) throws IllegalArgumentException {
 
-        int curYear = LocalDate.now().getYear();
-        int nextYear = LocalDate.now().getYear() + 1;
+        var curYear = LocalDate.now().getYear();
+        var nextYear = LocalDate.now().getYear() + 1;
 
-        File file = new File("off.json");
-        String offBinary = readFromFile(file);
+        var file = new File("off.json");
+        var offBinary = readFromFile(file);
 
         Counter curCount;
         int plannedOffCount;
@@ -25,11 +25,11 @@ public class Main {
 
         OperationMode mode;
 
-        IMapper mapper = new Deserializer(offBinary,curYear);
-        IMap map = mapper.getYearMap();
-        Map<LocalDate, OffMode> curYearMap = map.getMap();
+        var mapper = new Deserializer(offBinary,curYear);
+        var map = mapper.getYearMap();
+        var curYearMap = map.getMap();
 
-        Scanner sc = new Scanner(System.in);
+        var sc = new Scanner(System.in);
 
         System.out.println("Witaj w programie ===Urlopik===");
         System.out.println("©2018 by MZ\n");
@@ -68,13 +68,13 @@ public class Main {
                     }
                     else if (mode == OperationMode.EXIT) {
 
-                        ISerializer serializer = new Serializer();
+                        var serializer = new Serializer();
                         serializer.serialize(map, file);
 
-                        ISerializer csvCreator = new CsvCreator();
+                        var csvCreator = new CsvCreator();
                         csvCreator.serialize(map, new File("off.csv"));
 
-                        ISerializer mapDtoCreator = new MapDtoCreator();
+                        var mapDtoCreator = new MapDtoCreator();
                         mapDtoCreator.serialize(map,new MapDto());
 
                         System.out.println("Do widzenia!");
