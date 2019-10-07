@@ -21,7 +21,7 @@ public class Deserializer implements IMapper {
     }
 
     public Map<LocalDate, OffMode> generateYearMap(String offBinary, int year) {
-        ObjectMapper objectMapper = new ObjectMapper();
+        var objectMapper = new ObjectMapper();
         try {
             Map<String,String> stringMap = objectMapper.readValue(offBinary, new TypeReference<Map<String, String>>(){});
             return stringMapToProperMap(stringMap);
@@ -34,11 +34,11 @@ public class Deserializer implements IMapper {
     private Map<LocalDate, OffMode> stringMapToProperMap(Map<String,String> stringMap)
     {
         Map<LocalDate, OffMode> properMap = new TreeMap<>();
-        Holidays holidays = new Holidays(String.valueOf(year));
+        var holidays = new Holidays(String.valueOf(year));
 
         for (Map.Entry<String, String> entry : stringMap.entrySet()) {
-            LocalDate date = LocalDate.parse(entry.getKey());
-            OffMode mode = setOffMode(entry.getValue());
+            var date = LocalDate.parse(entry.getKey());
+            var mode = setOffMode(entry.getValue());
 
             if (isHoliday(date, holidays)){
                 mode = OffMode.HOLIDAY;

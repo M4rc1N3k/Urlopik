@@ -1,13 +1,10 @@
 import java.time.LocalDate;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class MapDtoCreator implements ISerializer<MapDto> {
     @Override
     public MapDto serialize(IMap map, MapDto resultObject) {
-        Map<LocalDate, OffMode> yearMap = map.getMap();
-        resultObject.yearMapDto = new TreeMap<>();
-
+        var yearMap = map.getMap();
         for (Map.Entry<LocalDate, OffMode> record: yearMap.entrySet())
         {
             resultObject.yearMapDto.put(

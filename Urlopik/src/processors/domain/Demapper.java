@@ -14,7 +14,7 @@ public class Demapper implements ISerializer<File> {
 
     @Override
     public File serialize(IMap map, File file) {
-        Map<LocalDate, OffMode> yearMap = map.getMap();
+        var yearMap = map.getMap();
         decomposeYearMap(yearMap, file);
         return file;
     }
@@ -22,7 +22,7 @@ public class Demapper implements ISerializer<File> {
     private void decomposeYearMap(Map<LocalDate, OffMode> yearMap, File file){
 
         int iterationNumber, symbolicValueToBeSaved;
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
 
         for (LocalDate entry : yearMap.keySet()) {
             iterationNumber = entry.getDayOfYear();

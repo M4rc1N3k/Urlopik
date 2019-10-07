@@ -16,25 +16,24 @@ public class Mapper implements IMapper {
 	}
 
 	private Map<LocalDate, OffMode> generateYearMap(String offBinary, int year) {
-		int a = offBinary.length();
+		var a = offBinary.length();
 		char array[] = offBinary.toCharArray();
 		Map<LocalDate, OffMode> yearMap = new TreeMap<>(	);
 		List<Integer> listInt = new ArrayList<Integer>();
 
 
 		for (int i = 0; i < a; i++) {
-			int candidate = Character.getNumericValue(array[i]);
+			var candidate = Character.getNumericValue(array[i]);
 			if (candidate == 0 || candidate == 1 || candidate == 2) //0-working, 1-off, 2-holiday
 				listInt.add(candidate);
 		}
 
-		int leapYearAppendix = isLeapYear(year) ? 1 : 0;
-		int yearLength = 365 + leapYearAppendix;
+		var leapYearAppendix = isLeapYear(year) ? 1 : 0;
+		var yearLength = 365 + leapYearAppendix;
 
-		List<LocalDate> holidaysList = new Holidays(String.valueOf(year)).getHolidaysList();
+		var holidaysList = new Holidays(String.valueOf(year)).getHolidaysList();
 
-
-		LocalDate date = LocalDate.parse(String.valueOf(year + "-01-01"));
+		var date = LocalDate.parse(String.valueOf(year + "-01-01"));
 
 		for (int i = 0; i < yearLength; i++) {
 			if (isHoliday(date, holidaysList))
